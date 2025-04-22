@@ -1,8 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
+<!DOCTYPE html> <!-- Define que es un archivo HTML-->
+<html lang="es"> 
+<!-- Define que el idioma principal del contenido es español-->
+
+<head> <!-- Cabecera, no visible en la página-->
   <meta charset="UTF-8">
   <title>Voluntariado Inclusivo - Inicio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -23,6 +26,49 @@
       <button class="btn btn-primario">Iniciar sesión</button>
     </div>
   </header>
+
+  <!-- CARRUSEL -->
+  <section class="carrusel">
+    <div class="slides">
+      <img src="img/voluntariado_1.jpg" class="slide active" alt="Voluntariado 1">
+      <img src="img/voluntariado_2.jpg" class="slide" alt="Voluntariado 2">
+      <img src="img/voluntariado_3.jpg" class="slide" alt="voluntariado 3">
+      <!-- Agrega más si quieres -->
+    </div>
+    <button class="prev" onclick="cambiarSlide(-1)">❮</button>
+    <button class="next" onclick="cambiarSlide(1)">❯</button>
+  </section>
+
+  <!-- INFORMACIÓN DE LA PLATAFORMA -->
+  <!-- ¿Qué es esta plataforma? -->
+  <section class="descripcion-plataforma">
+    <h2>¿Qué es esta plataforma?</h2>
+    <p>Esta plataforma conecta a personas con discapacidad o enfermedades crónicas con oportunidades de voluntariado adaptadas a sus necesidades. Ofrecemos una experiencia inclusiva y accesible para todos.</p>
+    <a href="#" class="btn btn-secundario">Ver más</a>
+  </section>
+
+  <!-- TESTIMONIOS -->
+  <section class="testimonios">
+    <h2>Testimonios</h2>
+    <div class="testimonio">
+      <p>"Esta plataforma me ayudó a encontrar una actividad de voluntariado adaptada a mis necesidades. ¡Fue una experiencia increíble!"</p>
+      <cite>- Ana, Voluntaria</cite>
+    </div>
+    <div class="testimonio">
+      <p>"Gracias a esta plataforma, pude conectarme con una organización que me ofreció apoyo para mi discapacidad y salud."</p>
+      <cite>- Juan, Beneficiario</cite>
+    </div>
+  </section>
+
+  <!-- LLAMADO A LA ACCIÓN (CTA) -->
+  <section class="cta">
+    <h2>¡Únete al Voluntariado!</h2>
+    <p>¿Estás listo para hacer la diferencia? Regístrate ahora y comienza a ayudar a quienes lo necesitan.</p>
+    <a href="#" class="btn btn-secundario">Regístrate ahora</a>
+  </section>
+  
+  <!--Script para el carrusel-->
+  <script src="js/main.js"></script>
 
 </body>
 </html>
