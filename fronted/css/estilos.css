@@ -1,0 +1,75 @@
+/* GENERAL */
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background-color: #F2F2F2; /* gris suave como fondo */
+  color: #1A1A40; /* azul oscuro para texto */
+}
+
+/* NAVBAR */
+.navbar {
+  background-color: #00AEEF; /* azul claro */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 30px;
+}
+
+.logo-menu {
+  display: flex;
+  align-items: center;
+}
+
+.logo {
+  height: 50px;
+  margin-right: 20px;
+}
+
+.menu a {
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: color 0.3s;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700; /* amarillo dorado como acento */
+}
+
+/* BOTONES */
+.botones-usuario {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 8px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+/* Registrarse */
+.btn-secundario {
+  background-color: #FFD700; /* amarillo dorado */
+  color: #1A1A40;
+}
+
+.btn-secundario:hover {
+  background-color: #FFB84D; /* hover naranja suave */
+}
+
+/* Iniciar sesión */
+.btn-primario {
+  background-color: white;
+  color: #00AEEF;
+}
+
+.btn-primario:hover {
+  background-color: #66CC99; /* verde menta como hover */
+  color: white;
+}
