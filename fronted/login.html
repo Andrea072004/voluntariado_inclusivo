@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Flor con HTML y CSS</title>
+  <style>
+    body {
+      background: #d0f0c0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .flor {
+      position: relative;
+      width: 100px;
+      height: 100px;
+    }
+
+    .petalo {
+      width: 60px;
+      height: 60px;
+      background: pink;
+      border-radius: 50% 50% 0 50%;
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      transform-origin: bottom right;
+    }
+
+    .petalo:nth-child(1) { transform: rotate(0deg); }
+    .petalo:nth-child(2) { transform: rotate(72deg); }
+    .petalo:nth-child(3) { transform: rotate(144deg); }
+    .petalo:nth-child(4) { transform: rotate(216deg); }
+    .petalo:nth-child(5) { transform: rotate(288deg); }
+
+    .centro {
+      width: 40px;
+      height: 40px;
+      background: yellow;
+      border-radius: 50%;
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <div class="flor">
+    <div class="petalo"></div>
+    <div class="petalo"></div>
+    <div class="petalo"></div>
+    <div class="petalo"></div>
+    <div class="petalo"></div>
+    <div class="centro"></div>
+  </div>
+</body>
+</html>
