@@ -205,5 +205,49 @@
       alert("¡Cuenta registrada con éxito!");
     });
   </script>
+
+<!-- Firebase App (necesario para todo) -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+
+<!-- Firebase Database -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+
+<!-- Configuración de Firebase -->
+<script>
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+    authDomain: "voluntariado-inclusivo.firebaseapp.com",
+    databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
+    projectId: "voluntariado-inclusivo",
+    storageBucket: "voluntariado-inclusivo.firebasestorage.app",
+    messagingSenderId: "400448703475",
+    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+  };
+
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+</script>
+<script>
+  const database = firebase.database();
+
+  document.getElementById('registerForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre').value;
+    const email = document.getElementById('correo').value;
+
+    // Guardar en Firebase
+    const nuevoRegistro = database.ref('usuarios').push();
+    nuevoRegistro.set({
+      nombre: nombre,
+      email: email
+    }).then(() => {
+      alert('Usuario registrado exitosamente.');
+    }).catch((error) => {
+      alert('Error al registrar: ' + error.message);
+    });
+  });
+</script>
+
 </body>
 </html>
