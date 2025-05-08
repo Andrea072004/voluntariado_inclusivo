@@ -1,4 +1,3 @@
-<!-- Login-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -40,7 +39,8 @@
         <h2>Iniciar Sesión</h2>
         <p>¿No tienes cuenta? <a href="register.html">Regístrate ahora</a></p>
       </div>
-      <form action="procesar_login.php" method="POST">
+
+      <form id="loginForm">
         <div class="campo-formulario">
           <label for="email">Correo electrónico</label>
           <input type="email" id="email" name="email" required>
@@ -53,16 +53,22 @@
           <input type="checkbox" id="recordar" name="recordar">
           <label for="recordar">Recordarme</label>
         </div>
-        <button type="submit" class="btn btn-login">Iniciar sesión</button>
+        <button type="submit" id="btnLogin" class="btn btn-login">Iniciar sesión</button>
         <p class="enlace-olvido"><a href="#">¿Olvidaste tu contraseña?</a></p>
       </form>
+
       <footer class="login-footer">
         <p>&copy; 2025 Voluntariado Inclusivo</p>
       </footer>
     </div>
-        <!-- LADO DERECHO: IMAGEN -->
-<div class="login-imagen">
-  <img src="img/login-imagen.jpg" alt="Imagen de fondo de login">
-</div>
 
-      
+    <!-- LADO DERECHO: IMAGEN -->
+    <div class="login-imagen">
+      <img src="img/login-imagen.jpg" alt="Imagen de fondo de login">
+    </div>
+  </div>
+
+  <!-- Enlace al script JS -->
+  <script src="js/main.js"></script>
+</body>
+</html>

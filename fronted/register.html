@@ -10,11 +10,7 @@
       font-family: Arial, sans-serif;
       background-color: #00AEEF;
       color: #1A1A40;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      flex-direction: column;
+      min-height: 100vh;
     }
 
     .register-container {
@@ -25,20 +21,7 @@
       overflow: hidden;
       width: 80%;
       max-width: 1000px;
-    }
-
-    .register-left {
-      flex: 1;
-      background-color: #F2F2F2;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .register-left img {
-      width: 150px;
-      height: auto;
+      margin: 50px auto; /* centrado horizontal y espacio vertical */
     }
 
     .register-right {
@@ -118,7 +101,10 @@
     }
   </style>
 </head>
-    <header class="navbar">
+<body>
+
+  <!-- ✅ BARRA DE NAVEGACIÓN -->
+  <header class="navbar">
     <div class="logo-menu">
       <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
       <nav class="menu">
@@ -138,10 +124,8 @@
       </a>
     </div>
   </header>
-<body>
-  <!-- Barra de navegación -->
-  
-  <!-- Formulario de registro -->
+
+  <!-- 📝 FORMULARIO DE REGISTRO -->
   <div class="register-container">
     <div class="register-right">
       <div class="form-box">
@@ -187,67 +171,38 @@
     </div>
   </div>
 
+  <!-- 🔌 Firebase y lógica -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
   <script>
-    document.getElementById("registerForm").addEventListener("submit", function (e) {
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+      authDomain: "voluntariado-inclusivo.firebaseapp.com",
+      databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
+      projectId: "voluntariado-inclusivo",
+      storageBucket: "voluntariado-inclusivo.firebasestorage.app",
+      messagingSenderId: "400448703475",
+      appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+    };
+    firebase.initializeApp(firebaseConfig);
+    const database = firebase.database();
+
+    document.getElementById('registerForm').addEventListener('submit', function(e) {
       e.preventDefault();
+      const nombre = document.getElementById('nombre').value;
+      const email = document.getElementById('correo').value;
 
-      const nombre = document.getElementById("nombre").value.trim();
-      const condicion = document.getElementById("condicion").value;
-      const autonomia = document.getElementById("autonomia").value;
-      const correo = document.getElementById("correo").value.trim();
-      const contrasena = document.getElementById("contrasena").value.trim();
-
-      if (!nombre || !condicion || !autonomia || !correo || !contrasena) {
-        alert("Por favor, complete todos los campos.");
-        return;
-      }
-
-      alert("¡Cuenta registrada con éxito!");
+      const nuevoRegistro = database.ref('usuarios').push();
+      nuevoRegistro.set({
+        nombre: nombre,
+        email: email
+      }).then(() => {
+        alert('Usuario registrado exitosamente.');
+      }).catch((error) => {
+        alert('Error al registrar: ' + error.message);
+      });
     });
   </script>
-
-<!-- Firebase App (necesario para todo) -->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-
-<!-- Firebase Database -->
-<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-
-<!-- Configuración de Firebase -->
-<script>
-  const firebaseConfig = {
-    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-    authDomain: "voluntariado-inclusivo.firebaseapp.com",
-    databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
-    projectId: "voluntariado-inclusivo",
-    storageBucket: "voluntariado-inclusivo.firebasestorage.app",
-    messagingSenderId: "400448703475",
-    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-  };
-
-  // Inicializar Firebase
-  firebase.initializeApp(firebaseConfig);
-</script>
-<script>
-  const database = firebase.database();
-
-  document.getElementById('registerForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    const nombre = document.getElementById('nombre').value;
-    const email = document.getElementById('correo').value;
-
-    // Guardar en Firebase
-    const nuevoRegistro = database.ref('usuarios').push();
-    nuevoRegistro.set({
-      nombre: nombre,
-      email: email
-    }).then(() => {
-      alert('Usuario registrado exitosamente.');
-    }).catch((error) => {
-      alert('Error al registrar: ' + error.message);
-    });
-  });
-</script>
 
 </body>
 </html>

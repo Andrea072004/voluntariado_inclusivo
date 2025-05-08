@@ -26,13 +26,25 @@
       <a href="register.html">
         <button class="btn btn-secundario">Registrarse</button>
       </a>
-
+      <a href="perfil.html">
+        <button class="btn btn-secundario">Mi perfil</button>
+      </a>     
       <a href="login.html">
       <button class="btn btn-primario">Iniciar sesión</button>
       </a>
     </div>
   </header>
-
+  
+  <script>
+    window.addEventListener('load', () => {
+      const mensaje = localStorage.getItem('mensajePerfil');
+      if (mensaje) {
+        alert(mensaje); // o puedes mostrarlo en la página en lugar de alert
+        localStorage.removeItem('mensajePerfil');
+      }
+    });
+  </script>
+  
   <!-- CARRUSEL -->
   <section class="carrusel">
     <div class="slides">
