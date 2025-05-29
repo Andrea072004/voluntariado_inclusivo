@@ -1,117 +1,165 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Mi Perfil</title>
-  <link rel="stylesheet" href="css/estilos.css" />
+  <link rel="stylesheet" href="css/estilos.css">
   <style>
     body {
-      background-color: #00AEEF;
       font-family: Arial, sans-serif;
+      background-color: #F2F2F2;
       margin: 0;
-      padding: 40px;
+      padding: 20px;
     }
 
     .perfil-container {
-      max-width: 500px;
-      margin: auto;
-      background-color: #f4f4f4;
-      border-radius: 20px;
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: #fff;
       padding: 30px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
     }
 
-    .perfil-header {
+    h2 {
       text-align: center;
-      margin-bottom: 20px;
-    }
-
-    .perfil-header h2 {
       color: #1A1A40;
-      margin-bottom: 5px;
     }
 
-    .perfil-header a {
-      font-size: 14px;
-      color: #0077cc;
-      text-decoration: underline;
-    }
-
-    .perfil-avatar {
-      text-align: center;
-      margin: 20px 0;
-    }
-
-    .perfil-avatar img {
-      width: 80px;
-      height: 80px;
-      border-radius: 50%;
-      background-color: #ccc;
-    }
-
-    .perfil-form label {
-      display: block;
-      margin-bottom: 5px;
+    label {
       font-weight: bold;
-      color: #333;
+      margin-top: 10px;
+      display: block;
     }
 
-    .perfil-form input,
-    .perfil-form select {
+    input, select {
       width: 100%;
       padding: 10px;
+      margin-top: 5px;
       margin-bottom: 15px;
       border: 1px solid #ccc;
       border-radius: 8px;
-      font-size: 14px;
     }
 
-    .perfil-form button {
-      width: 100%;
-      background-color: #FFD700;
-      color: #000;
-      border: none;
+    .btn-actualizar {
+      background-color: #00AEEF;
+      color: white;
       padding: 12px;
+      border: none;
+      width: 100%;
       font-size: 16px;
       border-radius: 8px;
       cursor: pointer;
     }
 
-    .perfil-form p#mensaje {
+    .btn-actualizar:hover {
+      background-color: #007EA7;
+    }
+
+    .mensaje {
       text-align: center;
-      margin-top: 10px;
-      color: green;
       font-weight: bold;
+      margin-top: 15px;
+    }
+
+    .exito {
+      color: green;
+    }
+
+    .error {
+      color: red;
     }
   </style>
 </head>
 <body>
-
   <div class="perfil-container">
-    <div class="perfil-header">
-      <h2>Nombre del usuario</h2>
-      <a href="#">Cambiar la contraseña</a>
-    </div>
+    <h2>Mi Perfil</h2>
+    <form id="perfilForm">
+      <label for="nombre">Nombre completo</label>
+      <input type="text" id="nombre" required>
 
-    <div class="perfil-avatar">
-      <img src="img/avatar.png" alt="Avatar del usuario">
-    </div>
+      <label for="condicion">Tipo de condición</label>
+      <select id="condicion" required>
+        <option value="">Seleccione</option>
+        <option value="cronica">Enfermedad crónica</option>
+        <option value="discapacidad">Discapacidad de desarrollo</option>
+      </select>
 
-    <form id="perfilForm" class="perfil-form">
-      <label for="nombre">Nombre</label>
-      <input type="text" id="nombre" name="nombre" required>
+      <label for="autonomia">Nivel de autonomía</label>
+      <select id="autonomia" required>
+        <option value="">Seleccione</option>
+        <option value="libre">Apoyo libre</option>
+        <option value="moderado">Moderado</option>
+        <option value="total">Total</option>
+      </select>
 
-      <label for="intereses">Intereses</label>
-      <input type="text" id="intereses" name="intereses">
+      <label for="correo">Correo electrónico</label>
+      <input type="email" id="correo" required disabled>
 
-      <label for="password">Nueva contraseña</label>
-      <input type="password" id="password" name="password">
-
-      <button type="submit">Guardar</button>
-      <p id="mensaje"></p>
+      <button type="submit" class="btn-actualizar">Actualizar datos</button>
+      <div id="mensaje" class="mensaje"></div>
     </form>
   </div>
 
-  <script src="js/main.js"></script>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+      authDomain: "voluntariado-inclusivo.firebaseapp.com",
+      databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
+      projectId: "voluntariado-inclusivo",
+      storageBucket: "voluntariado-inclusivo.firebasestorage.app",
+      messagingSenderId: "400448703475",
+      appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const db = firebase.database();
+
+    // Cargar datos del usuario desde localStorage
+    const userId = localStorage.getItem('userId');
+    if (!userId) {
+      alert('No se ha iniciado sesión.');
+      window.location.href = 'login.html';
+    } else {
+      db.ref('usuarios/' + userId).once('value').then(snapshot => {
+        const datos = snapshot.val();
+        document.getElementById('nombre').value = datos.nombre || '';
+        document.getElementById('condicion').value = datos.condicion || '';
+        document.getElementById('autonomia').value = datos.autonomia || '';
+        document.getElementById('correo').value = datos.email || '';
+      });
+    }
+
+    document.getElementById('perfilForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const nombre = document.getElementById('nombre').value.trim();
+      const condicion = document.getElementById('condicion').value;
+      const autonomia = document.getElementById('autonomia').value;
+      const mensaje = document.getElementById('mensaje');
+
+      if (!nombre || !condicion || !autonomia) {
+        mensaje.textContent = 'Por favor, complete todos los campos.';
+        mensaje.className = 'mensaje error';
+        return;
+      }
+
+      db.ref('usuarios/' + userId).update({
+        nombre: nombre,
+        condicion: condicion,
+        autonomia: autonomia
+      }).then(() => {
+        mensaje.textContent = 'Datos actualizados correctamente.';
+        mensaje.className = 'mensaje exito';
+      }).catch(error => {
+        mensaje.textContent = 'Error al actualizar: ' + error.message;
+        mensaje.className = 'mensaje error';
+      });
+    });
+  </script>
 </body>
 </html>

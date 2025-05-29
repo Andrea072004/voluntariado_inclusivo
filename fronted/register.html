@@ -1,4 +1,4 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
@@ -21,7 +21,7 @@
       overflow: hidden;
       width: 80%;
       max-width: 1000px;
-      margin: 50px auto; /* centrado horizontal y espacio vertical */
+      margin: 50px auto;
     }
 
     .register-right {
@@ -38,50 +38,16 @@
       color: #1A1A40;
     }
 
-    .social-icons {
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-      margin-bottom: 15px;
-    }
-
-    .social-icons img {
-      width: 30px;
-      height: 30px;
-      cursor: pointer;
-    }
-
-    .email-message, .login-message {
-      text-align: center;
-      margin-bottom: 10px;
-      font-size: 14px;
-      color: #555555;
-    }
-
-    .login-message a {
-      color: #1A1A40;
-      text-decoration: underline;
-    }
-
     form {
       display: flex;
       flex-direction: column;
       gap: 15px;
     }
 
-    label {
-      font-weight: bold;
-      font-size: 14px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="password"],
-    select {
+    input, select {
       padding: 10px;
       border-radius: 10px;
       border: 1px solid #ccc;
-      outline: none;
       font-size: 14px;
     }
 
@@ -93,17 +59,20 @@
       border-radius: 12px;
       font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
     }
 
     button:hover {
       background-color: #FFB84D;
     }
+
+    .error {
+      color: red;
+      font-size: 13px;
+    }
   </style>
 </head>
 <body>
 
-  <!-- ✅ BARRA DE NAVEGACIÓN -->
   <header class="navbar">
     <div class="logo-menu">
       <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
@@ -116,33 +85,19 @@
       </nav>
     </div>
     <div class="botones-usuario">
-      <a href="register.html">
-        <button class="btn btn-secundario">Registrarse</button>
-      </a>
-      <a href="login.html">
-        <button class="btn btn-primario">Iniciar sesión</button>
-      </a>
+      <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+      <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
     </div>
   </header>
 
-  <!-- 📝 FORMULARIO DE REGISTRO -->
   <div class="register-container">
     <div class="register-right">
       <div class="form-box">
         <h2>Crear una cuenta</h2>
 
-        <div class="social-icons">
-          <img src="img/google-icon.png" alt="Google">
-          <img src="img/fb-icon.png" alt="Facebook">
-          <img src="img/apple-icon.png" alt="Apple">
-        </div>
-
-        <p class="email-message">Regístrese con el correo electrónico</p>
-        <p class="login-message">¿Ya tienes una cuenta? <a href="login.html">Inicia sesión</a></p>
-
         <form id="registerForm">
           <label for="nombre">Nombre completo</label>
-          <input type="text" id="nombre" placeholder="Ingrese su nombre" required>
+          <input type="text" id="nombre" required>
 
           <label for="condicion">Tipo de condición</label>
           <select id="condicion" required>
@@ -159,19 +114,20 @@
             <option value="total">Total</option>
           </select>
 
-          <label for="correo">Dirección de correo electrónico</label>
-          <input type="email" id="correo" placeholder="ejemplo@correo.com" required>
+          <label for="correo">Correo electrónico</label>
+          <input type="email" id="correo" required>
 
           <label for="contrasena">Contraseña</label>
-          <input type="password" id="contrasena" placeholder="Ingrese su contraseña" required>
+          <input type="password" id="contrasena" required>
+          <span class="error" id="errorMensaje"></span>
 
-          <button type="submit">Regístrate</button>
+          <button type="submit">Registrarse</button>
         </form>
       </div>
     </div>
   </div>
 
-  <!-- 🔌 Firebase y lógica -->
+  <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
   <script>
@@ -180,7 +136,7 @@
       authDomain: "voluntariado-inclusivo.firebaseapp.com",
       databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
       projectId: "voluntariado-inclusivo",
-      storageBucket: "voluntariado-inclusivo.firebasestorage.app",
+      storageBucket: "voluntariado-inclusivo.appspot.com",
       messagingSenderId: "400448703475",
       appId: "1:400448703475:web:72c8742f2a830e0f48e086"
     };
@@ -189,20 +145,37 @@
 
     document.getElementById('registerForm').addEventListener('submit', function(e) {
       e.preventDefault();
-      const nombre = document.getElementById('nombre').value;
-      const email = document.getElementById('correo').value;
 
-      const nuevoRegistro = database.ref('usuarios').push();
-      nuevoRegistro.set({
+      const nombre = document.getElementById('nombre').value.trim();
+      const condicion = document.getElementById('condicion').value;
+      const autonomia = document.getElementById('autonomia').value;
+      const correo = document.getElementById('correo').value.trim().toLowerCase();
+      const contrasena = document.getElementById('contrasena').value.trim();
+      const errorMsg = document.getElementById('errorMensaje');
+
+      // Validación de contraseña
+      const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
+      if (!passwordRegex.test(contrasena)) {
+        errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
+        return;
+      } else {
+        errorMsg.textContent = "";
+      }
+
+      const nuevoUsuario = database.ref('usuarios').push();
+      nuevoUsuario.set({
         nombre: nombre,
-        email: email
+        condicion: condicion,
+        autonomia: autonomia,
+        correo: correo,
+        contrasena: contrasena
       }).then(() => {
-        alert('Usuario registrado exitosamente.');
+        alert("¡Registro exitoso!");
+        window.location.href = "login.html";
       }).catch((error) => {
-        alert('Error al registrar: ' + error.message);
+        alert("Error al registrar: " + error.message);
       });
     });
   </script>
-
 </body>
 </html>
