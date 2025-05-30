@@ -3,30 +3,45 @@
 <head>
   <meta charset="UTF-8">
   <title>Registro</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <style>
     body {
       margin: 0;
-      font-family: Arial, sans-serif;
-      background-color: #00AEEF;
-      color: #1A1A40;
+      font-family: 'Poppins', sans-serif;
+      background-color: #D9D9D9;
+      color: #0D0D0D;
       min-height: 100vh;
+    }
+
+    .logo-menu {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+    }
+
+    .izquierda-navbar {
+      display: flex;
+      align-items: center;
+      gap: 30px;
     }
 
     .register-container {
       display: flex;
-      background-color: #F2F2F2;
+      background-color: #ffffff;
       border-radius: 20px;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.2);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
       overflow: hidden;
-      width: 80%;
+      width: 90%;
       max-width: 1000px;
-      margin: 50px auto;
+      margin: 60px auto;
     }
 
     .register-right {
-      flex: 2;
-      padding: 30px;
+      flex: 1;
+      padding: 50px;
       display: flex;
       flex-direction: column;
       justify-content: center;
@@ -34,8 +49,9 @@
 
     .form-box h2 {
       text-align: center;
-      margin-bottom: 20px;
-      color: #1A1A40;
+      margin-bottom: 30px;
+      color: #1F98A6;
+      font-size: 28px;
     }
 
     form {
@@ -44,52 +60,74 @@
       gap: 15px;
     }
 
+    label {
+      font-weight: 600;
+      color: #0D0D0D;
+    }
+
     input, select {
-      padding: 10px;
+      padding: 12px;
       border-radius: 10px;
       border: 1px solid #ccc;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     button {
       background-color: #FFD700;
-      color: #1A1A40;
-      padding: 12px;
+      color: #0D0D0D;
+      padding: 14px;
       border: none;
-      border-radius: 12px;
+      border-radius: 30px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: background-color 0.3s;
     }
 
     button:hover {
-      background-color: #FFB84D;
+      background-color: #D9695F;
+      color: white;
     }
 
     .error {
-      color: red;
-      font-size: 13px;
+      color: #D9695F;
+      font-size: 14px;
+      text-align: left;
+    }
+
+    @media (max-width: 768px) {
+      .register-container {
+        flex-direction: column;
+      }
+
+      .register-right {
+        padding: 30px 20px;
+      }
     }
   </style>
 </head>
 <body>
 
+  <!-- NAVBAR igual al index -->
   <header class="navbar">
     <div class="logo-menu">
-      <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
-      <nav class="menu">
-        <a href="index.html" class="activo">Inicio</a>
-        <a href="#">Voluntariado</a>
-        <a href="#">Explorar oportunidades</a>
-        <a href="#">Nosotros</a>
-        <a href="#">Contacto</a>
-      </nav>
-    </div>
-    <div class="botones-usuario">
-      <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
-      <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+      <div class="izquierda-navbar">
+        <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
+        <nav class="menu">
+          <a href="index.html">Inicio</a>
+          <a href="#">Voluntariado</a>
+          <a href="#">Explorar oportunidades</a>
+          <a href="#">Nosotros</a>
+          <a href="#">Contacto</a>
+        </nav>
+      </div>
+      <div class="botones-usuario" id="botonesUsuario">
+        <!-- Se llena con JS -->
+      </div>
     </div>
   </header>
 
+  <!-- CONTENEDOR DE REGISTRO -->
   <div class="register-container">
     <div class="register-right">
       <div class="form-box">
@@ -130,6 +168,7 @@
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
@@ -153,7 +192,6 @@
       const contrasena = document.getElementById('contrasena').value.trim();
       const errorMsg = document.getElementById('errorMensaje');
 
-      // Validación de contraseña
       const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
       if (!passwordRegex.test(contrasena)) {
         errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
@@ -176,6 +214,30 @@
         alert("Error al registrar: " + error.message);
       });
     });
+
+    // Mostrar botones según sesión
+    window.addEventListener('load', () => {
+      const botonesUsuario = document.getElementById('botonesUsuario');
+      const userId = localStorage.getItem('userId');
+
+      if (userId) {
+        botonesUsuario.innerHTML = `
+          <a href="perfil.html"><button class="btn btn-secundario">Mi perfil</button></a>
+          <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+        `;
+      } else {
+        botonesUsuario.innerHTML = `
+          <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+          <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+        `;
+      }
+    });
+
+    function cerrarSesion() {
+      localStorage.removeItem('userId');
+      localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
+      window.location.href = 'index.html';
+    }
   </script>
 </body>
 </html>
