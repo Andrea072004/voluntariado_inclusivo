@@ -1,4 +1,13 @@
-* NAVBAR GENERAL */
+/* GENERAL */
+body {
+  font-family: 'Roboto', sans-serif;
+  background-color: #D9D9D9;
+  margin: 0;
+  padding: 0;
+  color: #0D0D0D;
+}
+
+/* NAVBAR GENERAL */
 .navbar {
   background-color: #1F98A6;
   color: white;
@@ -26,15 +35,32 @@
 .logo {
   height: 50px;
 }
- 
-body {
-  font-family: 'Roboto', sans-serif;
-  background-color: #D9D9D9;
-  margin: 0;
-  padding: 0;
-  color: #0D0D0D;
+
+/* Menú horizontal */
+.menu {
+  display: flex;
+  gap: 30px;
 }
 
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700;
+  text-decoration: none;
+}
+
+.menu a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+/* HEADER PRINCIPAL */
 .main-header {
   background-color: #1F98A6;
   color: white;
@@ -47,6 +73,7 @@ body {
   font-size: 2.5rem;
 }
 
+/* CONTENEDOR PRINCIPAL */
 .voluntariado-container {
   display: flex;
   flex-direction: column;
@@ -54,6 +81,7 @@ body {
   padding: 2rem;
 }
 
+/* TARJETAS DE HISTORIAS */
 .historia-card {
   background-color: white;
   border-left: 6px solid #26A699;
@@ -74,6 +102,7 @@ body {
   margin-bottom: 0.5rem;
 }
 
+/* FOOTER */
 .footer {
   text-align: center;
   padding: 1rem;
