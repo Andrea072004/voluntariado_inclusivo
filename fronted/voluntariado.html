@@ -3,27 +3,63 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Voluntariado Inclusivo</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/voluntariado.css') }}">
+  <title>Historias de Voluntariado</title>
+  <link rel="stylesheet" href="css/voluntariado.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+    <!-- NAVBAR -->
+  <header class="navbar">
+    <div class="navbar-contenido">
+      <div class="logo-contenedor">
+        <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
+        <nav class="menu" id="menuPrincipal">
+          <a href="index.html" class="activo">Inicio</a>
+          <a href="voluntariado.html">Voluntariado</a>
+          <a href="explorar.html">Explorar oportunidades</a>
+          <a href="#">Nosotros</a>
+          <a href="#">Contacto</a>
+        </nav>
+      </div>
+      <div class="botones-usuario" id="botonesUsuario"></div>
+    </div>
+  </header>
+
   <header class="main-header">
-    <h1>Voluntariado Inclusivo</h1>
-    <p>¡Únete para marcar la diferencia en la vida de personas con discapacidad o enfermedades crónicas!</p>
+    <h1>Historias de Voluntariado</h1>
+    <p>Conoce experiencias reales de quienes ya formaron parte del cambio.</p>
   </header>
 
   <main class="voluntariado-container">
-    <section class="oportunidad-card">
-      <h2>Voluntariado en Rehabilitación Física</h2>
-      <p>Apoya en actividades de estimulación motriz para niños con discapacidad motora leve. No se requiere experiencia previa, solo compromiso y empatía.</p>
-      <button onclick="alert('¡Gracias por tu interés! Pronto nos contactaremos.')">Unirme</button>
+    <section class="historia-card">
+      <h2>María Gutiérrez - Acompañamiento Virtual</h2>
+      <p class="fecha">Junio 2024</p>
+      <p>María participó brindando apoyo emocional a adultos mayores con enfermedades crónicas mediante videollamadas semanales. “Cada llamada me llenaba de energía. Escuchar sus historias, jugar con ellos virtualmente y ver su sonrisa fue una experiencia que jamás olvidaré.” María ahora estudia psicología y recomienda esta experiencia a todos los jóvenes con ganas de ayudar.</p>
     </section>
 
-    <section class="oportunidad-card">
-      <h2>Acompañamiento Virtual</h2>
-      <p>Realiza videollamadas de apoyo emocional con personas con enfermedades crónicas desde casa. Capacitación incluida.</p>
-      <button onclick="alert('¡Gracias por tu interés! Pronto nos contactaremos.')">Unirme</button>
+    <section class="historia-card">
+      <h2>Juan Ramírez - Apoyo en Centro de Rehabilitación</h2>
+      <p class="fecha">Enero 2025</p>
+      <p>Juan colaboró durante 3 meses en un centro de rehabilitación física para niños con discapacidad motora. Ayudaba en ejercicios de movilidad, juegos recreativos y acompañamiento emocional. “Pensé que yo iba a enseñarles algo, pero fueron ellos quienes me enseñaron a ver la vida con otros ojos.”</p>
+    </section>
+
+    <section class="historia-card">
+      <h2>Luz Delgado - Talleres de Habilidades Digitales</h2>
+      <p class="fecha">Marzo 2025</p>
+      <p>Luz dictó talleres virtuales de habilidades digitales para personas con discapacidad auditiva. Enseñó a usar el correo, videollamadas, y redes sociales. “Fue hermoso ver cómo se empoderaban con cada clase. Uno de ellos me escribió un correo agradeciéndome, ¡y me hizo llorar!”.</p>
+    </section>
+
+    <section class="historia-card">
+      <h2>Eduardo Torres - Apoyo Administrativo en ONG</h2>
+      <p class="fecha">Agosto 2024</p>
+      <p>Eduardo colaboró ayudando en tareas administrativas como organizar registros, responder correos y apoyar en eventos. “Aunque no estuve en contacto directo con los beneficiarios, saber que mi trabajo hacía que todo funcione mejor me dio mucha satisfacción.”</p>
+    </section>
+
+    <section class="historia-card">
+      <h2>Camila Paredes - Coordinadora de Actividades</h2>
+      <p class="fecha">Mayo 2025</p>
+      <p>Camila lideró la planificación de una feria inclusiva de talentos. Coordinó con voluntarios, artistas y cuidadores. “Fue un gran reto, pero ver a niños y adultos con discapacidad mostrando su arte en un escenario fue indescriptible.”</p>
     </section>
   </main>
 
