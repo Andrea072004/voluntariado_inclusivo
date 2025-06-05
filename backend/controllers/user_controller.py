@@ -1,8 +1,13 @@
-# Aquí irán las funciones que gestionan la lógica de negocio
+from firebase_config import db  # Importa el db ya inicializado
 
 def get_all_users():
-    # Simulación de respuesta (normalmente vendría de una base de datos)
-    return [
-        {"id": 1, "nombre": "Juan", "correo": "juan@example.com"},
-        {"id": 2, "nombre": "Ana", "correo": "ana@example.com"}
-    ]
+    users_ref = db.collection('usuarios')
+    docs = users_ref.stream()
+
+    users = []
+    for doc in docs:
+        user = doc.to_dict()
+        user['id'] = doc.id
+        users.append(user)
+
+    return users
