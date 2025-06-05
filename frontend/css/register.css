@@ -1,0 +1,115 @@
+/* ============================== */
+/* ESTILOS ESPECÍFICOS DE registro.html (Registro de Usuario) */
+/* ============================== */
+
+/* Fondo general del cuerpo del registro */
+body.register-body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #D9D9D9;
+  margin: 0;
+}
+
+/* Contenedor del formulario de registro */
+.register-container {
+  max-width: 500px;
+  margin: 80px auto;
+  background-color: white;
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Encabezado del registro */
+.register-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.register-header h2 {
+  font-size: 28px;
+  color: #1F98A6;
+  margin-bottom: 10px;
+}
+
+.register-header p {
+  font-size: 14px;
+  margin: 0;
+}
+
+.register-header a {
+  color: #1F98A6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.register-header a:hover {
+  text-decoration: underline;
+}
+
+/* Campos del formulario */
+.campo-formulario {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.campo-formulario label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0D0D0D;
+}
+
+.campo-formulario input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* Botón de registro */
+.btn-register {
+  width: 100%;
+  padding: 14px;
+  background-color: #1F98A6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-register:hover {
+  background-color: #26A699;
+}
+
+/* Enlace de regreso al login */
+.enlace-login {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.enlace-login a {
+  font-size: 14px;
+  color: #1F98A6;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.enlace-login a:hover {
+  color: #26A699;
+  text-decoration: underline;
+}
+
+/* Pie de página */
+.register-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 30px;
+}

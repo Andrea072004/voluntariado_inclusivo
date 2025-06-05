@@ -1,0 +1,189 @@
+/* ========================== */
+/* GLOBAL.CSS - ESTILOS GLOBALES */
+/* ========================== */
+
+/* GENERAL - aplica a todas las páginas */
+body {
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F2F2F2;
+  color: #0D0D0D;
+}
+
+/* NAVBAR GENERAL - presente en todas las vistas */
+.navbar {
+  background-color: #1F98A6;
+  color: white;
+  padding: 15px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: relative;
+  z-index: 10;
+}
+
+.navbar-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
+}
+
+.logo-contenedor {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.logo {
+  height: 50px;
+}
+
+.menu {
+  display: flex;
+  gap: 30px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.3s;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700;
+  text-decoration: none;
+}
+
+.menu a:visited {
+  color: white;
+  text-decoration: none;
+}
+
+.hamburguesa {
+  display: none;
+  font-size: 28px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+  margin-left: 20px;
+}
+
+/* MENÚ LATERAL - común a todas las vistas responsivas */
+.menu-lateral {
+  position: fixed;
+  top: 0;
+  left: -100%;
+  width: 80%;
+  max-width: 280px;
+  height: 100vh;
+  background-color: #1F98A6;
+  padding: 40px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  transition: left 0.3s ease;
+  z-index: 9999;
+  box-shadow: 5px 0 15px rgba(0,0,0,0.3);
+}
+
+.menu-lateral.show {
+  left: 0;
+}
+
+.menu-lateral a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 18px;
+}
+
+.menu-lateral .cerrar {
+  align-self: flex-end;
+  font-size: 24px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  color: white;
+}
+
+/* BOTONES GENERALES */
+.botones-usuario {
+  display: flex;
+  gap: 10px;
+  margin-left: 30px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.btn-secundario {
+  background-color: #FFD700;
+  color: #0D0D0D;
+}
+
+.btn-secundario:hover {
+  background-color: #D9695F;
+  color: white;
+}
+
+.btn-primario {
+  background-color: white;
+  color: #1F98A6;
+  border: 2px solid #1F98A6;
+}
+
+.btn-primario:hover {
+  background-color: #26A699;
+  color: white;
+}
+
+/* RESPONSIVE GLOBAL */
+@media (max-width: 768px) {
+  .menu {
+    display: none;
+  }
+
+  .hamburguesa {
+    display: block;
+  }
+
+  .botones-usuario {
+    display: none;
+  }
+}
+
+/* MENSAJES DE ERROR */
+.error {
+  color: #D9695F;
+  font-size: 14px;
+  margin-top: 5px;
+}
+
+/* BOTÓN DE RETORNO GENERAL */
+.btn-retorno-fijo {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  background-color: #1F98A6;
+  color: #ffffff;
+  padding: 10px 15px;
+  border-radius: 30px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s;
+  z-index: 10;
+}
+
+.btn-retorno-fijo:hover {
+  background-color: #D9695F;
+}

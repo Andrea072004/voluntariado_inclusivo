@@ -1,0 +1,127 @@
+/* ========================= */
+/* ESTILOS ESPECÍFICOS DE login.html (Pantalla de Inicio de Sesión) */
+/* ========================= */
+
+/* Fondo general */
+.login-body {
+  font-family: 'Poppins', sans-serif;
+  background-color: #D9D9D9;
+}
+
+/* Contenedor del formulario */
+.login-container {
+  max-width: 500px;
+  margin: 80px auto;
+  background-color: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* Encabezado del formulario */
+.login-header {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.logo-login {
+  height: 90px;
+  margin-bottom: 15px;
+}
+
+.login-header h2 {
+  color: #1F98A6;
+  font-size: 28px;
+  margin: 10px 0;
+}
+
+.login-header p {
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+.login-header a {
+  color: #1F98A6;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.login-header a:hover {
+  text-decoration: underline;
+}
+
+/* Campos del formulario */
+.campo-formulario {
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.campo-formulario label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: 6px;
+  color: #0D0D0D;
+}
+
+.campo-formulario input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  font-size: 15px;
+}
+
+/* Botón de login */
+.btn-login {
+  width: 100%;
+  padding: 14px;
+  background-color: #1F98A6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-login:hover {
+  background-color: #26A699;
+}
+
+/* Enlace de recuperación */
+.enlace-olvido {
+  text-align: center;
+  margin-top: 15px;
+}
+
+.enlace-olvido a {
+  font-size: 14px;
+  color: #1F98A6;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.enlace-olvido a:hover {
+  color: #26A699;
+  text-decoration: underline;
+}
+
+/* Pie de página */
+.login-footer {
+  text-align: center;
+  font-size: 12px;
+  color: #777;
+  margin-top: 30px;
+}
+
+/* Error de login */
+.error {
+  color: #D9695F;
+  font-size: 14px;
+  margin-top: 5px;
+}
