@@ -1,16 +1,17 @@
 /* ========================= */
-/* ESTILOS ESPECÍFICOS DE explorar.html (Pantalla de Explorar Oportunidades) */
+/* ESTILOS ESPECÍFICOS DE favoritos.html */
 /* ========================= */
 
 /* Navbar imagen + menú alineado correctamente */
-.logo-menu {
+.logo-menu,
+.navbar-contenido {
   display: flex;
   justify-content: space-between;
   align-items: center;
   width: 100%;
 }
 
-.izquierda-navbar {
+.logo-contenedor {
   display: flex;
   align-items: center;
   gap: 30px;
@@ -69,23 +70,6 @@
   font-size: 32px;
   margin-bottom: 30px;
   text-align: center;
-}
-
-/* Filtros */
-.filtros {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 20px;
-  margin-bottom: 30px;
-}
-
-.filtros input,
-.filtros select {
-  padding: 10px;
-  border-radius: 10px;
-  border: 1px solid #ccc;
-  font-family: 'Poppins', sans-serif;
 }
 
 /* Cards */

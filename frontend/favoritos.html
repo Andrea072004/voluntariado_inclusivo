@@ -3,27 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Explorar Oportunidades - Voluntariado Inclusivo</title>
+  <title>Favoritos - Voluntariado Inclusivo</title>
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="css/estilos.css">
   <link rel="stylesheet" href="css/explorar.css">
-  <style>
-    .btn-favorito {
-      background: none;
-      border: none;
-      font-size: 24px;
-      cursor: pointer;
-      transition: transform 0.2s;
-    }
-
-    .btn-favorito:hover {
-      transform: scale(1.2);
-    }
-
-    .btn-favorito.active {
-      color: #D9695F;
-    }
-  </style>
 </head>
 <body>
 
@@ -34,8 +17,8 @@
       <nav class="menu" id="menuPrincipal">
         <a href="index.html">Inicio</a>
         <a href="voluntariado.html">Voluntariado</a>
-        <a href="explorar.html" class="activo">Explorar oportunidades</a>
-        <a href="favoritos.html">Favoritos</a>
+        <a href="explorar.html">Explorar oportunidades</a>
+        <a href="favoritos.html" class="activo">Favoritos</a>
         <a href="nosotros.html">Nosotros</a>
         <a href="contacto.html">Contacto</a>
       </nav>
@@ -45,30 +28,8 @@
 </header>
 
 <main class="contenido-principal">
-  <h1>Explora Oportunidades de Voluntariado</h1>
-
-  <div class="filtros">
-    <input type="text" id="buscador" placeholder="Buscar por nombre o descripción...">
-    <select id="filtroDuracion">
-      <option value="">Duración</option>
-      <option value="1">Menos de 2h</option>
-      <option value="2">2h o más</option>
-      <option value="3">3h o más</option>
-    </select>
-    <select id="filtroFrecuencia">
-      <option value="">Frecuencia</option>
-      <option value="1">1 vez/semana</option>
-      <option value="2">2+ veces/semana</option>
-    </select>
-    <select id="filtroDificultad">
-      <option value="">Dificultad</option>
-      <option value="Baja">Baja</option>
-      <option value="Media">Media</option>
-      <option value="Alta">Alta</option>
-    </select>
-  </div>
-
-  <div class="oportunidades" id="listaVoluntariados"></div>
+  <h1>Mis Oportunidades Favoritas</h1>
+  <div class="oportunidades" id="listaFavoritos"></div>
 </main>
 
 <script>
@@ -90,43 +51,40 @@
     { id: 15, nombre: "Paseos Inclusivos al Aire Libre", descripcion: "Acompaña en caminatas o paseos a personas con movilidad reducida.", duracion: 2, frecuencia: 1, dificultad: "Baja" }
   ];
 
-  const favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
 
-  function toggleFavorito(id) {
+  function eliminarFavorito(id) {
     const index = favoritos.indexOf(id);
     if (index >= 0) {
       favoritos.splice(index, 1);
-    } else {
-      favoritos.push(id);
+      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+      renderFavoritos();
     }
-    localStorage.setItem("favoritos", JSON.stringify(favoritos));
-    renderVoluntariados();
   }
 
-  function renderVoluntariados() {
-    const contenedor = document.getElementById("listaVoluntariados");
-    const texto = document.getElementById("buscador").value.toLowerCase();
-    const duracion = parseInt(document.getElementById("filtroDuracion").value);
-    const frecuencia = parseInt(document.getElementById("filtroFrecuencia").value);
-    const dificultad = document.getElementById("filtroDificultad").value;
-
+  function renderFavoritos() {
+    const contenedor = document.getElementById("listaFavoritos");
     contenedor.innerHTML = "";
 
-    voluntariados.filter(v => {
-      return (!texto || v.nombre.toLowerCase().includes(texto) || v.descripcion.toLowerCase().includes(texto)) &&
-             (!duracion || v.duracion >= duracion) &&
-             (!frecuencia || v.frecuencia >= frecuencia) &&
-             (!dificultad || v.dificultad === dificultad);
-    }).forEach(v => {
-      const esFavorito = favoritos.includes(v.id);
+    const favoritosFiltrados = voluntariados.filter(v => favoritos.includes(v.id));
+
+    if (favoritosFiltrados.length === 0) {
+      contenedor.innerHTML = `
+        <p style="text-align:center;">No has agregado voluntariados como favoritos aún.</p>
+        <div style="text-align:center; margin-top:20px;">
+          <a href="explorar.html" class="btn btn-primario">Explorar oportunidades</a>
+        </div>
+      `;
+      return;
+    }
+
+    favoritosFiltrados.forEach(v => {
       contenedor.innerHTML += `
         <div class="card">
           <h3>${v.nombre}</h3>
           <p>${v.descripcion}</p>
           <p><strong>Duración:</strong> ${v.duracion}h | <strong>Frecuencia:</strong> ${v.frecuencia}x/sem | <strong>Dificultad:</strong> ${v.dificultad}</p>
-          <button class="btn-favorito ${esFavorito ? 'active' : ''}" onclick="toggleFavorito(${v.id})">
-            ${esFavorito ? '❤️' : '🤍'}
-          </button>
+          <button class="btn" style="font-size: 22px;" title="Quitar de favoritos" onclick="eliminarFavorito(${v.id})">❤️</button>
           <button class="btn">Postularme</button>
         </div>
       `;
@@ -134,11 +92,7 @@
   }
 
   window.addEventListener("DOMContentLoaded", () => {
-    renderVoluntariados();
-    document.getElementById("buscador").addEventListener("input", renderVoluntariados);
-    document.getElementById("filtroDuracion").addEventListener("change", renderVoluntariados);
-    document.getElementById("filtroFrecuencia").addEventListener("change", renderVoluntariados);
-    document.getElementById("filtroDificultad").addEventListener("change", renderVoluntariados);
+    renderFavoritos();
 
     const botonesUsuario = document.getElementById("botonesUsuario");
     const userId = localStorage.getItem("userId");
