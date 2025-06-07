@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mis Voluntariados - Voluntariado Inclusivo</title>
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/mis_voluntariados.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+</head>
+<body>
+
+  <!-- NAVBAR REUTILIZABLE -->
+  <div id="navbar-container"></div>
+
+  <!-- CONTENIDO -->
+  <main class="contenido">
+    <header class="main-header">
+      <h1>Mis Voluntariados</h1>
+      <p>Revisa tus postulaciones y el estado de tus participaciones.</p>
+    </header>
+
+    <section class="voluntariados-container">
+      <div class="voluntariado-card">
+        <h3>Voluntariado en Biblioteca Comunitaria</h3>
+        <p><strong>Estado:</strong> Aprobado</p>
+        <p><strong>Frecuencia:</strong> 2 veces/semana</p>
+        <p><strong>Duración:</strong> 2 horas</p>
+        <p><strong>Inicio:</strong> 12/06/2025</p>
+        <button class="btn-detalles">Ver Detalles</button>
+      </div>
+
+      <div class="voluntariado-card">
+        <h3>Apoyo en Centros de Rehabilitación</h3>
+        <p><strong>Estado:</strong> Pendiente</p>
+        <p><strong>Frecuencia:</strong> 1 vez/semana</p>
+        <p><strong>Duración:</strong> 1.5 horas</p>
+        <p><strong>Inicio:</strong> En proceso</p>
+        <button class="btn-detalles">Ver Detalles</button>
+      </div>
+
+      <!-- Puedes agregar más tarjetas según el usuario -->
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <p>&copy; 2025 Proyecto Voluntariado Inclusivo - Huancayo</p>
+  </footer>
+
+  <!-- Script para navbar e íconos -->
+  <script>
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-container").innerHTML = data;
+
+        const userId = localStorage.getItem("userId");
+
+         if (botonesUsuario) {
+          if (userId) {
+            botonesUsuario.innerHTML = `
+              <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
+              <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+            `;
+          } else {
+            botonesUsuario.innerHTML = `
+              <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+              <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+            `;
+          }
+        }
+
+        window.cerrarSesion = function () {
+          localStorage.removeItem("userId");
+          localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
+          window.location.href = "index.html";
+        };
+
+        const iconoCampana = document.getElementById("iconoCampana");
+        const dropdown = document.getElementById("dropdownNotificaciones");
+
+        if (iconoCampana && dropdown) {
+          iconoCampana.addEventListener("click", function (e) {
+            e.preventDefault();
+            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
+          });
+
+          window.addEventListener("click", function (e) {
+            if (!iconoCampana.contains(e.target) && !dropdown.contains(e.target)) {
+              dropdown.style.display = "none";
+            }
+          });
+        }
+      });
+  </script>
+
+</body>
+</html>

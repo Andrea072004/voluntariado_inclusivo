@@ -1,0 +1,212 @@
+/* ========================= */
+/* NAVBAR PRINCIPAL */
+/* ========================= */
+.navbar {
+  background-color: #1F98A6;
+  color: white;
+  padding: 12px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+/* Contenido interno del navbar */
+.navbar-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+/* Logo y navegación izquierda */
+.logo-contenedor {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  height: 45px;
+}
+
+/* Enlaces del menú */
+.menu {
+  display: flex;
+  gap: 24px;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700;
+}
+
+/* ========================= */
+/* ÍCONOS Y BOTONES DERECHA */
+/* ========================= */
+.acciones-derecha {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Íconos fijos: campana, corazón, usuario */
+.iconos-derecha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.iconos-derecha a i {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.iconos-derecha a i:hover {
+  color: #FFD700;
+}
+
+/* Ícono de perfil dinámico (cargado desde JS) */
+#botonesUsuario i {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+#botonesUsuario i:hover {
+  color: #FFD700;
+}
+
+/* Contenedor de botones login / registro / cerrar sesión */
+.botones-usuario {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ========================= */
+/* BOTONES MODERNOS */
+/* ========================= */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 40px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  white-space: nowrap;
+}
+
+/* Botón amarillo */
+.btn-secundario {
+  background-color: #FFD700;
+  color: #0D0D0D;
+}
+
+.btn-secundario:hover {
+  background-color: #D9695F;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(217, 105, 95, 0.3);
+}
+
+/* Botón blanco con borde celeste */
+.btn-primario {
+  background-color: white;
+  color: #1F98A6;
+  border: 2px solid #1F98A6;
+}
+
+.btn-primario:hover {
+  background-color: #26A699;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(38, 166, 153, 0.3);
+}
+
+/* ========================= */
+/* DROPDOWN DE NOTIFICACIONES */
+/* ========================= */
+.notificaciones-wrapper {
+  position: relative;
+}
+
+.dropdown-notificaciones {
+  display: none;
+  position: absolute;
+  top: 30px;
+  right: 0;
+  width: 280px;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+  padding: 15px;
+  z-index: 2000;
+}
+
+.dropdown-notificaciones p {
+  margin: 0 0 10px 0;
+  color: #1F98A6;
+  font-weight: bold;
+}
+
+.dropdown-notificaciones ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown-notificaciones ul li {
+  padding: 8px;
+  border-bottom: 1px solid #eee;
+  font-size: 14px;
+  color: #333;
+}
+
+.dropdown-notificaciones ul li:last-child {
+  border-bottom: none;
+}
+
+/* ========================= */
+/* RESPONSIVE (Pantallas pequeñas) */
+/* ========================= */
+@media (max-width: 768px) {
+  .navbar-contenido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .acciones-derecha {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .botones-usuario {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}

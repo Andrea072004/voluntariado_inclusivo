@@ -1,120 +1,130 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Favoritos - Voluntariado Inclusivo</title>
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/estilos.css">
-  <link rel="stylesheet" href="css/explorar.css">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="css/navbar.css"/>
+  <link rel="stylesheet" href="css/favoritos.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"/>
 </head>
 <body>
 
-<header class="navbar">
-  <div class="navbar-contenido">
-    <div class="logo-contenedor">
-      <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
-      <nav class="menu" id="menuPrincipal">
-        <a href="index.html">Inicio</a>
-        <a href="voluntariado.html">Voluntariado</a>
-        <a href="explorar.html">Explorar oportunidades</a>
-        <a href="favoritos.html" class="activo">Favoritos</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="contacto.html">Contacto</a>
-      </nav>
-    </div>
-    <div class="botones-usuario" id="botonesUsuario"></div>
-  </div>
-</header>
+  <!-- Navbar reutilizable -->
+  <div id="navbar-container"></div>
 
-<main class="contenido-principal">
-  <h1>Mis Oportunidades Favoritas</h1>
-  <div class="oportunidades" id="listaFavoritos"></div>
-</main>
+  <main class="contenido-principal">
+    <h1>Mis Oportunidades Favoritas</h1>
+    <div class="oportunidades" id="listaFavoritos"></div>
+  </main>
 
-<script>
-  const voluntariados = [
-    { id: 1, nombre: "Voluntariado en Biblioteca Comunitaria", descripcion: "Ayuda a niños con dificultades visuales o motoras en sesiones inclusivas.", duracion: 1, frecuencia: 2, dificultad: "Baja" },
-    { id: 2, nombre: "Apoyo en Centros de Rehabilitación", descripcion: "Colabora con pacientes en recuperación en terapias y talleres creativos.", duracion: 2, frecuencia: 1, dificultad: "Media" },
-    { id: 3, nombre: "Acompañamiento Virtual", descripcion: "Brinda apoyo emocional a personas crónicas vía llamadas o videollamadas.", duracion: 1, frecuencia: 2, dificultad: "Media" },
-    { id: 4, nombre: "Guía en Museos Inclusivos", descripcion: "Guía a visitantes con discapacidad en recorridos adaptados por museos.", duracion: 3, frecuencia: 1, dificultad: "Baja" },
-    { id: 5, nombre: "Voluntariado en Huertos Urbanos", descripcion: "Participa en cultivos saludables e inclusivos con personas con discapacidad.", duracion: 2, frecuencia: 2, dificultad: "Media" },
-    { id: 6, nombre: "Talleres de Manualidades para Adultos Mayores", descripcion: "Organiza actividades creativas que promuevan la motricidad y bienestar.", duracion: 2, frecuencia: 1, dificultad: "Media" },
-    { id: 7, nombre: "Apoyo en Comedores Populares", descripcion: "Ayuda a distribuir alimentos en zonas vulnerables y con discapacidad.", duracion: 3, frecuencia: 1, dificultad: "Alta" },
-    { id: 8, nombre: "Recolección y Clasificación de Ropa", descripcion: "Organiza ropa para personas con discapacidad o en riesgo social.", duracion: 2, frecuencia: 2, dificultad: "Baja" },
-    { id: 9, nombre: "Voluntariado en Refugios de Animales", descripcion: "Asiste en el cuidado de animales con actividades adaptadas.", duracion: 2, frecuencia: 2, dificultad: "Media" },
-    { id: 10, nombre: "Lectura Inclusiva a Domicilio", descripcion: "Lee libros a personas con discapacidad visual o adultos mayores.", duracion: 1, frecuencia: 1, dificultad: "Media" },
-    { id: 11, nombre: "Talleres de Alfabetización Digital", descripcion: "Enseña a personas con discapacidad a usar tecnologías básicas.", duracion: 2, frecuencia: 2, dificultad: "Alta" },
-    { id: 12, nombre: "Acompañamiento en Hospitales", descripcion: "Brinda compañía a pacientes con enfermedades crónicas o terminales.", duracion: 2, frecuencia: 1, dificultad: "Alta" },
-    { id: 13, nombre: "Voluntariado en Eventos Deportivos Adaptados", descripcion: "Apoya en organización y asistencia durante eventos inclusivos.", duracion: 4, frecuencia: 1, dificultad: "Alta" },
-    { id: 14, nombre: "Campañas de Sensibilización", descripcion: "Participa en campañas para promover la inclusión y empatía social.", duracion: 2, frecuencia: 3, dificultad: "Media" },
-    { id: 15, nombre: "Paseos Inclusivos al Aire Libre", descripcion: "Acompaña en caminatas o paseos a personas con movilidad reducida.", duracion: 2, frecuencia: 1, dificultad: "Baja" }
-  ];
+  <script>
+    // Cargar navbar.html dinámicamente
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-container").innerHTML = data;
 
-  let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+        // Botones usuario
+        const botonesUsuario = document.getElementById('botonesUsuario');
+        const userId = localStorage.getItem('userId');
 
-  function eliminarFavorito(id) {
-    const index = favoritos.indexOf(id);
-    if (index >= 0) {
-      favoritos.splice(index, 1);
-      localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        if (botonesUsuario) {
+          if (userId) {
+            botonesUsuario.innerHTML = `
+              <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
+              <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+            `;
+          } else {
+            botonesUsuario.innerHTML = `
+              <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+              <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+            `;
+          }
+        }
+
+
+        // Dropdown notificaciones
+        const iconoCampana = document.getElementById("iconoCampana");
+        const dropdown = document.getElementById("dropdownNotificaciones");
+        iconoCampana?.addEventListener("click", e => {
+          e.preventDefault();
+          dropdown?.classList.toggle("mostrar");
+        });
+
+        // Cerrar sesión global
+        window.cerrarSesion = function () {
+          localStorage.removeItem("userId");
+          localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
+          window.location.href = "index.html";
+        };
+      });
+  </script>
+
+  <script>
+    const voluntariados = [
+      { id: 1, nombre: "Voluntariado en Biblioteca Comunitaria", descripcion: "Ayuda a niños con dificultades visuales o motoras en sesiones inclusivas.", duracion: 1, frecuencia: 2, dificultad: "Baja" },
+      { id: 2, nombre: "Apoyo en Centros de Rehabilitación", descripcion: "Colabora con pacientes en recuperación en terapias y talleres creativos.", duracion: 2, frecuencia: 1, dificultad: "Media" },
+      { id: 3, nombre: "Acompañamiento Virtual", descripcion: "Brinda apoyo emocional a personas crónicas vía llamadas o videollamadas.", duracion: 1, frecuencia: 2, dificultad: "Media" },
+      { id: 4, nombre: "Guía en Museos Inclusivos", descripcion: "Guía a visitantes con discapacidad en recorridos adaptados por museos.", duracion: 3, frecuencia: 1, dificultad: "Baja" },
+      { id: 5, nombre: "Voluntariado en Huertos Urbanos", descripcion: "Participa en cultivos saludables e inclusivos con personas con discapacidad.", duracion: 2, frecuencia: 2, dificultad: "Media" },
+      { id: 6, nombre: "Talleres de Manualidades para Adultos Mayores", descripcion: "Organiza actividades creativas que promuevan la motricidad y bienestar.", duracion: 2, frecuencia: 1, dificultad: "Media" },
+      { id: 7, nombre: "Apoyo en Comedores Populares", descripcion: "Ayuda a distribuir alimentos en zonas vulnerables y con discapacidad.", duracion: 3, frecuencia: 1, dificultad: "Alta" },
+      { id: 8, nombre: "Recolección y Clasificación de Ropa", descripcion: "Organiza ropa para personas con discapacidad o en riesgo social.", duracion: 2, frecuencia: 2, dificultad: "Baja" },
+      { id: 9, nombre: "Voluntariado en Refugios de Animales", descripcion: "Asiste en el cuidado de animales con actividades adaptadas.", duracion: 2, frecuencia: 2, dificultad: "Media" },
+      { id: 10, nombre: "Lectura Inclusiva a Domicilio", descripcion: "Lee libros a personas con discapacidad visual o adultos mayores.", duracion: 1, frecuencia: 1, dificultad: "Media" },
+      { id: 11, nombre: "Talleres de Alfabetización Digital", descripcion: "Enseña a personas con discapacidad a usar tecnologías básicas.", duracion: 2, frecuencia: 2, dificultad: "Alta" },
+      { id: 12, nombre: "Acompañamiento en Hospitales", descripcion: "Brinda compañía a pacientes con enfermedades crónicas o terminales.", duracion: 2, frecuencia: 1, dificultad: "Alta" },
+      { id: 13, nombre: "Voluntariado en Eventos Deportivos Adaptados", descripcion: "Apoya en organización y asistencia durante eventos inclusivos.", duracion: 4, frecuencia: 1, dificultad: "Alta" },
+      { id: 14, nombre: "Campañas de Sensibilización", descripcion: "Participa en campañas para promover la inclusión y empatía social.", duracion: 2, frecuencia: 3, dificultad: "Media" },
+      { id: 15, nombre: "Paseos Inclusivos al Aire Libre", descripcion: "Acompaña en caminatas o paseos a personas con movilidad reducida.", duracion: 2, frecuencia: 1, dificultad: "Baja" }
+    ];
+
+    let favoritos = JSON.parse(localStorage.getItem("favoritos")) || [];
+
+    function eliminarFavorito(id) {
+      const index = favoritos.indexOf(id);
+      if (index >= 0) {
+        favoritos.splice(index, 1);
+        localStorage.setItem("favoritos", JSON.stringify(favoritos));
+        renderFavoritos();
+      }
+    }
+
+    function renderFavoritos() {
+      const contenedor = document.getElementById("listaFavoritos");
+      contenedor.innerHTML = "";
+
+      const favoritosFiltrados = voluntariados.filter(v => favoritos.includes(v.id));
+
+      if (favoritosFiltrados.length === 0) {
+        contenedor.innerHTML = `
+          <p style="text-align:center;">No has agregado voluntariados como favoritos aún.</p>
+          <div style="text-align:center; margin-top:20px;">
+            <a href="explorar.html" class="btn btn-primario">Explorar oportunidades</a>
+          </div>
+        `;
+        return;
+      }
+
+      favoritosFiltrados.forEach(v => {
+        contenedor.innerHTML += `
+          <div class="card">
+            <h3>${v.nombre}</h3>
+            <p>${v.descripcion}</p>
+            <p><strong>Duración:</strong> ${v.duracion}h | <strong>Frecuencia:</strong> ${v.frecuencia}x/sem | <strong>Dificultad:</strong> ${v.dificultad}</p>
+            <button class="btn" style="font-size: 22px;" title="Quitar de favoritos" onclick="eliminarFavorito(${v.id})">❤️</button>
+            <button class="btn">Postularme</button>
+          </div>
+        `;
+      });
+    }
+
+    window.addEventListener("DOMContentLoaded", () => {
       renderFavoritos();
-    }
-  }
-
-  function renderFavoritos() {
-    const contenedor = document.getElementById("listaFavoritos");
-    contenedor.innerHTML = "";
-
-    const favoritosFiltrados = voluntariados.filter(v => favoritos.includes(v.id));
-
-    if (favoritosFiltrados.length === 0) {
-      contenedor.innerHTML = `
-        <p style="text-align:center;">No has agregado voluntariados como favoritos aún.</p>
-        <div style="text-align:center; margin-top:20px;">
-          <a href="explorar.html" class="btn btn-primario">Explorar oportunidades</a>
-        </div>
-      `;
-      return;
-    }
-
-    favoritosFiltrados.forEach(v => {
-      contenedor.innerHTML += `
-        <div class="card">
-          <h3>${v.nombre}</h3>
-          <p>${v.descripcion}</p>
-          <p><strong>Duración:</strong> ${v.duracion}h | <strong>Frecuencia:</strong> ${v.frecuencia}x/sem | <strong>Dificultad:</strong> ${v.dificultad}</p>
-          <button class="btn" style="font-size: 22px;" title="Quitar de favoritos" onclick="eliminarFavorito(${v.id})">❤️</button>
-          <button class="btn">Postularme</button>
-        </div>
-      `;
     });
-  }
-
-  window.addEventListener("DOMContentLoaded", () => {
-    renderFavoritos();
-
-    const botonesUsuario = document.getElementById("botonesUsuario");
-    const userId = localStorage.getItem("userId");
-    if (userId) {
-      botonesUsuario.innerHTML = `
-        <a href="perfil.html"><button class="btn btn-secundario">Mi perfil</button></a>
-        <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
-      `;
-    } else {
-      botonesUsuario.innerHTML = `
-        <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
-        <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
-      `;
-    }
-  });
-
-  function cerrarSesion() {
-    localStorage.removeItem("userId");
-    localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
-    window.location.href = "index.html";
-  }
-</script>
+  </script>
 
 </body>
 </html>

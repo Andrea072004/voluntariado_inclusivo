@@ -1,8 +1,142 @@
 /* ========================= */
-/* ESTILOS ESPECÍFICOS DE index.html (Pantalla Principal) */
+/* ESTILOS GENERALES */
 /* ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* CARRUSEL */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+.navbar {
+  background-color: #1F98A6;
+  color: white;
+  padding: 12px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  width: 100%;
+}
+
+.navbar-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logo-contenedor {
+  display: flex;
+  align-items: center;
+  gap: 30px;
+}
+
+.logo {
+  height: 45px;
+}
+
+.menu {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700;
+}
+
+/* Íconos */
+.iconos-derecha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.iconos-derecha a i {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.iconos-derecha a i:hover {
+  color: #FFD700;
+}
+
+/* Botones usuario */
+.botones-usuario {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.botones-usuario a i {
+  font-size: 20px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.botones-usuario a i:hover {
+  color: #FFD700;
+}
+
+/* ========================= */
+/* BOTONES ESTILO MODERNO */
+/* ========================= */
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secundario {
+  background-color: #FFD700;
+  color: #0D0D0D;
+}
+
+.btn-secundario:hover {
+  background-color: #D9695F;
+  color: white;
+}
+
+.btn-primario {
+  background-color: white;
+  color: #1F98A6;
+  border: 2px solid #1F98A6;
+}
+
+.btn-primario:hover {
+  background-color: #26A699;
+  color: white;
+}
+
+/* ========================= */
+/* CARRUSEL DE IMÁGENES */
+/* Sección de imágenes rotativas */
+/* ========================= */
 .carrusel {
   position: relative;
   width: 100%;
@@ -42,23 +176,25 @@
   cursor: pointer;
 }
 
-.prev {
-  left: 10px;
+.prev { left: 10px; }
+.next { right: 10px; }
+
+/* ========================= */
+/* SECCIÓN DESCRIPCIÓN DE PLATAFORMA */
+/* Qué es la plataforma + botón ver más */
+/* ========================= */
+.descripcion-plataforma,
+.cta {
+  width: 80%;
+  margin: 60px auto;
+  border-radius: 20px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  padding: 50px;
 }
 
-.next {
-  right: 10px;
-}
-
-/* DESCRIPCIÓN DE LA PLATAFORMA */
 .descripcion-plataforma {
   background-color: white;
-  padding: 50px;
-  text-align: center;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-  margin: 60px auto;
-  width: 80%;
 }
 
 .descripcion-plataforma h2 {
@@ -77,11 +213,14 @@
   margin-top: 25px;
 }
 
-/* TESTIMONIOS */
+/* ========================= */
+/* TESTIMONIOS DE USUARIOS */
+/* Sección con opiniones */
+/* ========================= */
 .testimonios {
+  background-color: #D9D9D9;
   text-align: center;
   padding: 50px;
-  background-color: #D9D9D9;
 }
 
 .testimonios h2 {
@@ -92,9 +231,9 @@
 
 .testimonio {
   background-color: white;
-  padding: 25px;
-  margin: 20px auto;
   width: 80%;
+  margin: 20px auto;
+  padding: 25px;
   border-radius: 15px;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
 }
@@ -111,15 +250,13 @@
   font-weight: bold;
 }
 
+/* ========================= */
 /* CTA - LLAMADO A LA ACCIÓN */
+/* Última sección: únete al voluntariado */
+/* ========================= */
 .cta {
   background-color: #26A699;
   color: white;
-  text-align: center;
-  padding: 60px;
-  border-radius: 20px;
-  margin: 60px auto;
-  width: 80%;
 }
 
 .cta h2 {
@@ -136,6 +273,7 @@
   background-color: #FFD700;
   color: #0D0D0D;
   margin-top: 10px;
+  transition: background-color 0.3s;
 }
 
 .cta .btn:hover {

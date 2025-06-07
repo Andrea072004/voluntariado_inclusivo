@@ -1,4 +1,20 @@
 /* ========================= */
+/* ESTILOS GENERALES */
+/* ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* ========================= */
 /* ESTILOS ESPECÍFICOS DE favoritos.html */
 /* ========================= */
 
@@ -112,4 +128,34 @@
 .card .btn:hover {
   background-color: #D9695F;
   color: white;
+}
+
+/* Estilo para el ícono del botón de eliminar favorito */
+.card .btn[title="Quitar de favoritos"] {
+  font-size: 22px;
+  background-color: transparent;
+  border: none;
+  color: #D9695F;
+  padding: 0 10px;
+}
+
+.card .btn[title="Quitar de favoritos"]:hover {
+  color: #ff3b3b;
+  transform: scale(1.2);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .contenido-principal {
+    padding: 0 10px;
+  }
+
+  .card {
+    padding: 15px;
+  }
+
+  .btn {
+    width: 100%;
+    justify-content: center;
+  }
 }

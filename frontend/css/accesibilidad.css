@@ -1,0 +1,35 @@
+/* Modo alto contraste */
+.modo-alto-contraste {
+  background-color: #000 !important;
+  color: #FFD700 !important;
+}
+
+.modo-alto-contraste a,
+.modo-alto-contraste h1,
+.modo-alto-contraste h2,
+.modo-alto-contraste h3,
+.modo-alto-contraste p,
+.modo-alto-contraste span,
+.modo-alto-contraste button,
+.modo-alto-contraste i {
+  color: #FFD700 !important;
+  background-color: #000 !important;
+  border-color: #FFD700 !important;
+}
+
+/* Mejora accesibilidad general */
+button, a {
+  padding: 10px;
+  margin: 4px;
+  font-size: 1em;
+}
+
+button:focus, a:focus {
+  outline: 2px dashed #000;
+  outline-offset: 4px;
+}
+
+/* Íconos accesibles */
+i {
+  pointer-events: none;
+}

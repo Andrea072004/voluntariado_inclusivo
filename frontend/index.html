@@ -4,37 +4,17 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Voluntariado Inclusivo - Inicio</title>
+
+  <!-- Fuentes y estilos -->
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="css/estilos.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/index.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
 </head>
 <body>
 
-  <!-- NAVBAR -->
-<header class="navbar">
-  <div class="navbar-contenido">
-    <div class="logo-contenedor">
-      <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
-      <nav class="menu" id="menuPrincipal">
-        <a href="index.html" class="activo">Inicio</a>
-        <a href="voluntariado.html">Voluntariado</a>
-        <a href="explorar.html">Explorar oportunidades</a>
-        <a href="nosotros.html">Nosotros</a>
-        <a href="contacto.html">Contacto</a>
-      </nav>
-    </div>
-    <div class="botones-usuario" id="botonesUsuario"></div>
-  </div>
-</header>
-
-  <!-- Menú lateral izquierdo -->
-  <div class="menu-lateral" id="menuLateral">
-    <button class="cerrar" id="cerrarMenu">×</button>
-    <a href="index.html">Inicio</a>
-    <a href="#">Voluntariado</a>
-    <a href="explorar.html">Explorar oportunidades</a>
-    <a href="#">Nosotros</a>
-    <a href="#">Contacto</a>
-  </div>
+  <!-- NAVBAR DINÁMICO -->
+  <div id="navbar-container"></div>
 
   <!-- CARRUSEL -->
   <section class="carrusel">
@@ -74,55 +54,62 @@
     <a href="register.html" class="btn btn-secundario">Regístrate ahora</a>
   </section>
 
-  <!-- SCRIPTS -->
+  <!-- Scripts -->
   <script src="js/main.js"></script>
   <script>
-    // Sesión
+    // Cargar navbar.html
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-container").innerHTML = data;
+
+        // Dropdown notificaciones
+        const iconoCampana = document.getElementById('iconoCampana');
+        const dropdown = document.getElementById('dropdownNotificaciones');
+
+        iconoCampana?.addEventListener('click', function (e) {
+          e.preventDefault();
+          dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!iconoCampana?.contains(e.target) && !dropdown?.contains(e.target)) {
+            dropdown.style.display = 'none';
+          }
+        });
+
+        // Botones usuario
+        const botonesUsuario = document.getElementById('botonesUsuario');
+        const userId = localStorage.getItem('userId');
+
+        if (botonesUsuario) {
+          if (userId) {
+            botonesUsuario.innerHTML = `
+              <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
+              <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+            `;
+          } else {
+            botonesUsuario.innerHTML = `
+              <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+              <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+            `;
+          }
+        }
+
+        // Cierre sesión
+        window.cerrarSesion = function () {
+          localStorage.removeItem('userId');
+          localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
+          window.location.href = 'index.html';
+        };
+      });
+
+    // Mostrar mensaje de cierre de sesión si existe
     window.addEventListener('load', () => {
       const mensaje = localStorage.getItem('mensajePerfil');
       if (mensaje) {
         alert(mensaje);
         localStorage.removeItem('mensajePerfil');
-      }
-
-      const botonesUsuario = document.getElementById('botonesUsuario');
-      const userId = localStorage.getItem('userId');
-
-      if (userId) {
-        botonesUsuario.innerHTML = `
-          <a href="perfil.html"><button class="btn btn-secundario">Mi perfil</button></a>
-          <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
-        `;
-      } else {
-        botonesUsuario.innerHTML = `
-          <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
-          <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
-        `;
-      }
-    });
-
-    function cerrarSesion() {
-      localStorage.removeItem('userId');
-      localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
-      window.location.href = 'index.html';
-    }
-
-    // Menú Hamburguesa
-    const btnHamburguesa = document.getElementById('btnHamburguesa');
-    const menuLateral = document.getElementById('menuLateral');
-    const cerrarMenu = document.getElementById('cerrarMenu');
-
-    btnHamburguesa.addEventListener('click', () => {
-      menuLateral.classList.add('show');
-    });
-
-    cerrarMenu.addEventListener('click', () => {
-      menuLateral.classList.remove('show');
-    });
-
-    window.addEventListener('click', (e) => {
-      if (!menuLateral.contains(e.target) && !btnHamburguesa.contains(e.target)) {
-        menuLateral.classList.remove('show');
       }
     });
   </script>

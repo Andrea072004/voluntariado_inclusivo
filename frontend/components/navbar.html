@@ -1,0 +1,67 @@
+<!-- NAVBAR COMPONENTE REUTILIZABLE -->
+<header class="navbar">
+  <div class="navbar-contenido">
+    <!-- Izquierda: Logo y menú de navegación -->
+    <div class="logo-contenedor">
+      <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo" />
+      <nav class="menu" id="menuPrincipal">
+        <a href="index.html" class="activo">Inicio</a>
+        <a href="explorar.html">Explorar oportunidades</a>
+        <a href="mis_voluntariados.html">Mis voluntariados</a>
+        <a href="nosotros.html">Nosotros</a>
+        <a href="contacto.html">Contacto</a>
+      </nav>
+    </div>
+
+    <!-- Derecha: Íconos y botones -->
+    <div class="acciones-derecha">
+      <div class="iconos-derecha">
+
+        <!-- Botón de alto contraste -->
+        <button id="btnContraste" title="Activar/Desactivar modo alto contraste">
+          <i class="fas fa-adjust"></i>
+        </button> 
+
+        <!-- Botones de accesibilidad para texto -->
+        <button id="btnAumentarTexto" title="Aumentar tamaño del texto">
+          <i class="fas fa-search-plus"></i>
+        </button>
+        <button id="btnDisminuirTexto" title="Disminuir tamaño del texto">
+          <i class="fas fa-search-minus"></i>
+        </button>
+
+        <!-- Icono de notificaciones -->
+        <div class="notificaciones-wrapper">
+          <a href="#" id="iconoCampana" title="Notificaciones"><i class="fas fa-bell"></i></a>
+          <div class="dropdown-notificaciones" id="dropdownNotificaciones">
+            <p><strong>Notificaciones</strong></p>
+            <ul>
+              <li>Tu perfil fue actualizado correctamente</li>
+              <li>Hay una nueva oportunidad en Rehabilitación</li>
+              <li>Recuerda postularte antes del viernes</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Icono de favoritos -->
+        <a href="favoritos.html" title="Favoritos"><i class="fas fa-heart"></i></a>
+      </div>
+
+      <!-- Botones dinámicos (login, registro, cerrar sesión) -->
+      <div class="botones-usuario" id="botonesUsuario"></div>
+    </div>
+  </div>
+</header>
+
+<!-- Cargar navbar -->
+<div id="navbar-container"></div>
+<script>
+  fetch("components/navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar-container").innerHTML = data;
+      const script = document.createElement("script");
+      script.src = "js/navbar.js";
+      document.body.appendChild(script);
+    });
+</script>

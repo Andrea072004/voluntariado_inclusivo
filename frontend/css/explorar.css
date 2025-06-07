@@ -1,31 +1,106 @@
 /* ========================= */
-/* ESTILOS ESPECÍFICOS DE explorar.html (Pantalla de Explorar Oportunidades) */
+/* ESTILOS GENERALES */
 /* ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
-/* Navbar imagen + menú alineado correctamente */
-.logo-menu {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #f8f8f8;
+}
+
+/* ========================= */
+/* NAVBAR */
+/* ========================= */
+.navbar {
+  background-color: #1F98A6;
+  color: white;
+  padding: 12px 30px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
   width: 100%;
 }
 
-.izquierda-navbar {
+.navbar-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.logo-contenedor {
   display: flex;
   align-items: center;
   gap: 30px;
 }
 
 .logo {
-  height: 50px;
+  height: 45px;
 }
 
-/* Botones de sesión */
+.menu {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+}
+
+.menu a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 16px;
+  transition: color 0.3s ease;
+}
+
+.menu a:hover,
+.menu a.activo {
+  color: #FFD700;
+}
+
+/* Íconos */
+.iconos-derecha {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.iconos-derecha a i {
+  color: white;
+  font-size: 20px;
+  transition: color 0.3s ease;
+}
+
+.iconos-derecha a i:hover {
+  color: #FFD700;
+}
+
+/* Botones usuario */
 .botones-usuario {
   display: flex;
-  gap: 10px;
+  gap: 12px;
+  align-items: center;
 }
 
+.botones-usuario a i {
+  font-size: 20px;
+  color: white;
+  transition: color 0.3s ease;
+}
+
+.botones-usuario a i:hover {
+  color: #FFD700;
+}
+
+/* ========================= */
+/* BOTONES ESTILO MODERNO */
+/* ========================= */
 .btn {
   padding: 10px 20px;
   border: none;
@@ -58,6 +133,9 @@
   color: white;
 }
 
+/* ========================= */
+/* CONTENIDO PRINCIPAL */
+/* ========================= */
 .contenido-principal {
   max-width: 1000px;
   margin: 60px auto;
@@ -71,7 +149,9 @@
   text-align: center;
 }
 
-/* Filtros */
+/* ========================= */
+/* FILTROS */
+/* ========================= */
 .filtros {
   display: flex;
   flex-wrap: wrap;
@@ -88,7 +168,9 @@
   font-family: 'Poppins', sans-serif;
 }
 
-/* Cards */
+/* ========================= */
+/* TARJETAS DE OPORTUNIDAD */
+/* ========================= */
 .oportunidades {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
@@ -113,6 +195,7 @@
   line-height: 1.6;
 }
 
+/* Botón de postulación */
 .card .btn {
   margin-top: 15px;
   background-color: #FFD700;
@@ -128,4 +211,50 @@
 .card .btn:hover {
   background-color: #D9695F;
   color: white;
+}
+
+/* ========================= */
+/* CORAZÓN FAVORITO */
+/* ========================= */
+.btn-favorito {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+.btn-favorito:hover {
+  transform: scale(1.2);
+}
+
+.btn-favorito.active {
+  color: #D9695F;
+}
+
+/* ========================= */
+/* RESPONSIVE NAVBAR */
+/* ========================= */
+@media (max-width: 768px) {
+  .navbar-contenido {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .menu {
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .botones-usuario {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+    margin-top: 15px;
+  }
+
+  .iconos-derecha {
+    margin-top: 10px;
+  }
 }

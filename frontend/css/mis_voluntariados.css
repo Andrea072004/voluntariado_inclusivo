@@ -1,0 +1,98 @@
+/* ========================= */
+/* NORMALIZACIÓN GLOBAL     */
+/* ========================= */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Asegura que el body ocupe el 100% de la altura */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F2F2F2;
+  color: #0D0D0D;
+}
+
+/* Contenedor que envuelve el contenido principal */
+.contenido {
+  flex: 1;
+}
+
+/* HEADER PRINCIPAL */
+.main-header {
+  background-color: #1F98A6;
+  color: white;
+  text-align: center;
+  padding: 2rem 1rem;
+}
+
+.main-header h1 {
+  margin-bottom: 10px;
+  font-size: 2.5rem;
+}
+
+/* CONTENEDOR DE VOLUNTARIADOS */
+.voluntariados-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem;
+  justify-content: center;
+  padding: 2rem;
+}
+
+/* TARJETA INDIVIDUAL */
+.voluntariado-card {
+  background-color: white;
+  border-radius: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  width: 300px;
+  transition: transform 0.3s ease;
+}
+
+.voluntariado-card:hover {
+  transform: translateY(-5px);
+}
+
+.voluntariado-card h3 {
+  color: #1F98A6;
+  margin-bottom: 10px;
+}
+
+.voluntariado-card p {
+  margin: 5px 0;
+  font-size: 0.95rem;
+}
+
+/* BOTÓN */
+.btn-detalles {
+  display: block;
+  margin-top: 1rem;
+  background-color: #FFD700;
+  color: #0D0D0D;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 30px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.btn-detalles:hover {
+  background-color: #D9695F;
+  color: white;
+}
+
+/* FOOTER */
+.footer {
+  text-align: center;
+  padding: 1rem;
+  background-color: #0D0D0D;
+  color: white;
+}

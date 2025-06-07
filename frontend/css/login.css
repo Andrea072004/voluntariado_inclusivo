@@ -1,46 +1,54 @@
 /* ========================= */
-/* ESTILOS ESPECÍFICOS DE login.html (Pantalla de Inicio de Sesión) */
+/* NORMALIZACIÓN GLOBAL     */
+/* Aplica a toda la página  */
 /* ========================= */
-
-/* Fondo general */
-.login-body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #D9D9D9;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
+
+body {
+  padding: 0;
+  font-family: 'Poppins', sans-serif;
+  background-color: #F2F2F2;
+  color: #0D0D0D;
+}
+
 
 /* Contenedor del formulario */
 .login-container {
-  max-width: 500px;
-  margin: 80px auto;
-  background-color: white;
+  max-width: 480px;
+  margin: 40px auto;
+  background-color: #ffffff;
   border-radius: 20px;
   padding: 40px 30px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-/* Encabezado del formulario */
+/* Encabezado del login */
 .login-header {
   text-align: center;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
 }
 
 .logo-login {
   height: 90px;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .login-header h2 {
-  color: #1F98A6;
   font-size: 28px;
+  color: #1F98A6;
   margin: 10px 0;
 }
 
 .login-header p {
-  margin-top: 8px;
   font-size: 14px;
+  margin-top: 6px;
 }
 
 .login-header a {
@@ -53,10 +61,10 @@
   text-decoration: underline;
 }
 
-/* Campos del formulario */
+/* Campos */
 .campo-formulario {
   width: 100%;
-  margin-bottom: 20px;
+  margin-bottom: 18px;
 }
 
 .campo-formulario label {
@@ -72,16 +80,36 @@
   border: 1px solid #ccc;
   border-radius: 10px;
   font-size: 15px;
+  outline: none;
+  transition: border-color 0.3s ease;
 }
 
-/* Botón de login */
+.campo-formulario input:focus {
+  border-color: #1F98A6;
+}
+
+/* Checkbox mostrar contraseña */
+.campo-check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  color: #0D0D0D;
+  margin-bottom: 20px;
+}
+
+.campo-check input[type="checkbox"] {
+  transform: scale(1.1);
+}
+
+/* Botón principal */
 .btn-login {
   width: 100%;
   padding: 14px;
-  background-color: #1F98A6;
-  color: white;
+  background-color: #FFD700;
+  color: #0D0D0D;
   border: none;
-  border-radius: 10px;
+  border-radius: 30px;
   font-weight: bold;
   font-size: 16px;
   cursor: pointer;
@@ -89,13 +117,14 @@
 }
 
 .btn-login:hover {
-  background-color: #26A699;
+  background-color: #D9695F;
+  color: white;
 }
 
-/* Enlace de recuperación */
+/* Enlace olvido contraseña */
 .enlace-olvido {
+  margin-top: 14px;
   text-align: center;
-  margin-top: 15px;
 }
 
 .enlace-olvido a {
@@ -103,15 +132,14 @@
   color: #1F98A6;
   text-decoration: none;
   font-weight: 500;
-  transition: color 0.3s ease;
 }
 
 .enlace-olvido a:hover {
-  color: #26A699;
   text-decoration: underline;
+  color: #26A699;
 }
 
-/* Pie de página */
+/* Footer */
 .login-footer {
   text-align: center;
   font-size: 12px;
@@ -119,9 +147,104 @@
   margin-top: 30px;
 }
 
-/* Error de login */
+/* Errores */
 .error {
   color: #D9695F;
   font-size: 14px;
   margin-top: 5px;
+}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  right: 30px;
+  background-color: #1F98A6;
+  color: white;
+  padding: 16px 24px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+  font-size: 16px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 9999;
+  opacity: 0;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast i {
+  font-style: normal;
+  font-size: 18px;
+}
+
+.toast button {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Modal recuperación */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 9998;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background-color: #fff;
+  padding: 30px;
+  border-radius: 16px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.2);
+}
+
+.modal-content h3 {
+  margin-bottom: 20px;
+  color: #1F98A6;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+}
+
+.modal-content button {
+  padding: 12px 20px;
+  background-color: #1F98A6;
+  color: #fff;
+  border: none;
+  border-radius: 10px;
+  font-weight: bold;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+/* Responsive */
+@media (max-width: 500px) {
+  .login-container {
+    padding: 30px 20px;
+  }
 }

@@ -5,26 +5,14 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Contáctanos - Voluntariado Inclusivo</title>
   <link rel="stylesheet" href="css/contacto.css">
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-  
-      <!-- NAVBAR -->
-  <header class="navbar">
-    <div class="navbar-contenido">
-      <div class="logo-contenedor">
-        <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
-        <nav class="menu" id="menuPrincipal">
-          <a href="index.html" class="activo">Inicio</a>
-          <a href="voluntariado.html">Voluntariado</a>
-          <a href="explorar.html">Explorar oportunidades</a>
-          <a href="nosotros.html">Nosotros</a>
-          <a href="contacto.html">Contacto</a>
-        </nav>
-      </div>
-      <div class="botones-usuario" id="botonesUsuario"></div>
-    </div>
-  </header>
+
+  <!-- NAVBAR REUTILIZABLE -->
+  <div id="navbarContainer"></div>
 
   <!-- CABECERA -->
   <header class="main-header">
@@ -57,7 +45,7 @@
     <p><strong>Dirección:</strong> Jr. Real 125, Huancayo, Junín, Perú</p>
   </section>
 
-  <!-- MAPA EMBEBIDO (OPCIONAL) -->
+  <!-- MAPA EMBEBIDO -->
   <section class="mapa">
     <h2>Encuéntranos aquí</h2>
     <iframe src="https://www.google.com/maps?q=Huancayo,+Junín,+Perú&output=embed" width="100%" height="300" frameborder="0" style="border:0;" allowfullscreen></iframe>
@@ -67,5 +55,64 @@
   <footer class="footer">
     <p>&copy; 2025 Proyecto Voluntariado Inclusivo - Huancayo</p>
   </footer>
+
+  <!-- SCRIPT DE NAVBAR Y SESIÓN -->
+  <script>
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbarContainer").innerHTML = data;
+
+        // Dropdown notificaciones funcional
+        const iconoCampana = document.getElementById('iconoCampana');
+        const dropdown = document.getElementById('dropdownNotificaciones');
+
+        iconoCampana?.addEventListener('click', function (e) {
+          e.preventDefault();
+          dropdown.style.display = (dropdown.style.display === 'block') ? 'none' : 'block';
+        });
+
+        document.addEventListener('click', function (e) {
+          if (!iconoCampana?.contains(e.target) && !dropdown?.contains(e.target)) {
+            dropdown.style.display = 'none';
+          }
+        });
+
+        // Botones usuario
+        const botonesUsuario = document.getElementById('botonesUsuario');
+        const userId = localStorage.getItem('userId');
+
+        if (botonesUsuario) {
+          if (userId) {
+            botonesUsuario.innerHTML = `
+              <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
+              <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+            `;
+          } else {
+            botonesUsuario.innerHTML = `
+              <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+              <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+            `;
+          }
+        }
+
+        // Función global para cerrar sesión
+        window.cerrarSesion = function () {
+          localStorage.removeItem('userId');
+          localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
+          window.location.href = 'index.html';
+        };
+      });
+
+    // Mostrar mensaje si cerró sesión
+    window.addEventListener('load', () => {
+      const mensaje = localStorage.getItem('mensajePerfil');
+      if (mensaje) {
+        alert(mensaje);
+        localStorage.removeItem('mensajePerfil');
+      }
+    });
+  </script>
+
 </body>
 </html>

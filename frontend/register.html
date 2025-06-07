@@ -5,170 +5,137 @@
   <title>Registro</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="css/estilos.css">
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Poppins', sans-serif;
-      background-color: #D9D9D9;
-      color: #0D0D0D;
-      min-height: 100vh;
-    }
-
-    .logo-menu {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .izquierda-navbar {
-      display: flex;
-      align-items: center;
-      gap: 30px;
-    }
-
-    .register-container {
-      display: flex;
-      background-color: #ffffff;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
-      overflow: hidden;
-      width: 90%;
-      max-width: 1000px;
-      margin: 60px auto;
-    }
-
-    .register-right {
-      flex: 1;
-      padding: 50px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-    }
-
-    .form-box h2 {
-      text-align: center;
-      margin-bottom: 30px;
-      color: #1F98A6;
-      font-size: 28px;
-    }
-
-    form {
-      display: flex;
-      flex-direction: column;
-      gap: 15px;
-    }
-
-    label {
-      font-weight: 600;
-      color: #0D0D0D;
-    }
-
-    input, select {
-      padding: 12px;
-      border-radius: 10px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-    }
-
-    button {
-      background-color: #FFD700;
-      color: #0D0D0D;
-      padding: 14px;
-      border: none;
-      border-radius: 30px;
-      font-size: 16px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: background-color 0.3s;
-    }
-
-    button:hover {
-      background-color: #D9695F;
-      color: white;
-    }
-
-    .error {
-      color: #D9695F;
-      font-size: 14px;
-      text-align: left;
-    }
-
-    @media (max-width: 768px) {
-      .register-container {
-        flex-direction: column;
-      }
-
-      .register-right {
-        padding: 30px 20px;
-      }
-    }
-  </style>
+  <link rel="stylesheet" href="css/navbar.css">
+  <link rel="stylesheet" href="css/register.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css">
 </head>
 <body>
 
-  <!-- NAVBAR igual al index -->
-  <header class="navbar">
-    <div class="logo-menu">
-      <div class="izquierda-navbar">
-        <img src="img/logo_incluvoluntariado.jpg" alt="Logo Voluntariado" class="logo">
-        <nav class="menu">
-          <a href="index.html">Inicio</a>
-          <a href="voluntariado.html">Voluntariado</a>
-          <a href="#">Explorar oportunidades</a>
-          <a href="nosotros.html">Nosotros</a>
-          <a href="contacto.html">Contacto</a>
-        </nav>
-      </div>
-      <div class="botones-usuario" id="botonesUsuario">
-        <!-- Se llena con JS -->
-      </div>
-    </div>
-  </header>
+  <!-- Navbar dinámico -->
+  <div id="navbar-container"></div>
 
-  <!-- CONTENEDOR DE REGISTRO -->
+  <!-- Formulario Registro -->
   <div class="register-container">
-    <div class="register-right">
-      <div class="form-box">
-        <h2>Crear una cuenta</h2>
+    <div class="form-box">
+      <h2>¡Queremos conocerte mejor!</h2>
 
-        <form id="registerForm">
-          <label for="nombre">Nombre completo</label>
-          <input type="text" id="nombre" required>
+      <form id="registerForm">
+        <!-- Sección 1 -->
+        <div class="form-section">
+          <h3>Tus datos personales</h3>
+          <div class="form-grid">
+            <div>
+              <label for="nombre">Nombre completo</label>
+              <input type="text" id="nombre" name="nombre" required>
+            </div>
+            <div>
+              <label for="fechaNacimiento">Fecha de nacimiento</label>
+              <input type="date" id="fechaNacimiento" name="fechaNacimiento" required>
+            </div>
+            <div>
+              <label for="edad">Edad</label>
+              <input type="number" id="edad" name="edad" min="0" required>
+            </div>
+            <div>
+              <label for="correo">Correo electrónico</label>
+              <input type="email" id="correo" name="correo" required>
+            </div>
+            <div>
+              <label for="contrasena">Contraseña</label>
+              <input type="password" id="contrasena" name="contrasena" required>
+              <span class="error" id="errorMensaje"></span>
+            </div>
+          </div>
+        </div>
 
-          <label for="condicion">Tipo de condición</label>
-          <select id="condicion" required>
-            <option value="">Seleccione</option>
-            <option value="cronica">Enfermedad crónica</option>
-            <option value="discapacidad">Discapacidad de desarrollo</option>
-          </select>
+        <!-- Sección 2 -->
+        <div class="form-section">
+          <h3>Tu perfil como voluntario</h3>
+          <div class="form-grid">
+            <div>
+              <label for="cronica">Enfermedad crónica (si aplica)</label>
+              <input type="text" id="cronica" name="cronica">
+            </div>
+            <div>
+              <label for="discapacidad">Tipo de discapacidad (si aplica)</label>
+              <input type="text" id="discapacidad" name="discapacidad">
+            </div>
+            <div>
+              <label for="motivo">Motivo para ser voluntario</label>
+              <input type="text" id="motivo" name="motivo" required>
+            </div>
+            <div>
+              <label for="intereses">Intereses</label>
+              <input type="text" id="intereses" name="intereses" required>
+            </div>
+            <div>
+              <label for="habilidades">Habilidades</label>
+              <input type="text" id="habilidades" name="habilidades" required>
+            </div>
+            <div>
+              <label for="autonomia">Nivel de autonomía</label>
+              <select id="autonomia" name="autonomia" required>
+                <option value="">Seleccione</option>
+                <option value="libre">Apoyo libre</option>
+                <option value="moderado">Moderado</option>
+                <option value="total">Total</option>
+              </select>
+            </div>
+          </div>
+        </div>
 
-          <label for="autonomia">Nivel de autonomía</label>
-          <select id="autonomia" required>
-            <option value="">Seleccione</option>
-            <option value="libre">Apoyo libre</option>
-            <option value="moderado">Moderado</option>
-            <option value="total">Total</option>
-          </select>
-
-          <label for="correo">Correo electrónico</label>
-          <input type="email" id="correo" required>
-
-          <label for="contrasena">Contraseña</label>
-          <input type="password" id="contrasena" required>
-          <span class="error" id="errorMensaje"></span>
-
-          <button type="submit">Registrarse</button>
-        </form>
-      </div>
+        <button type="submit">Registrarse</button>
+      </form>
     </div>
   </div>
+
+  <!-- Navbar Script -->
+  <script>
+    fetch("components/navbar.html")
+      .then(res => res.text())
+      .then(data => {
+        document.getElementById("navbar-container").innerHTML = data;
+
+        const botonesUsuario = document.getElementById('botonesUsuario');
+        const userId = localStorage.getItem('userId');
+
+        if (userId) {
+          botonesUsuario.innerHTML = `
+            <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
+            <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
+          `;
+        } else {
+          botonesUsuario.innerHTML = `
+            <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
+            <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
+          `;
+        }
+
+        document.getElementById("iconoCampana")?.addEventListener("click", function(e) {
+          e.preventDefault();
+          const dropdown = document.getElementById("dropdownNotificaciones");
+          dropdown.style.display = (dropdown.style.display === "block") ? "none" : "block";
+        });
+
+        document.addEventListener("click", function(e) {
+          const icono = document.getElementById("iconoCampana");
+          const dropdown = document.getElementById("dropdownNotificaciones");
+          if (!icono?.contains(e.target) && !dropdown?.contains(e.target)) {
+            dropdown.style.display = "none";
+          }
+        });
+
+        window.cerrarSesion = function () {
+          localStorage.removeItem('userId');
+          localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
+          window.location.href = 'index.html';
+        };
+      });
+  </script>
 
   <!-- Firebase -->
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
@@ -186,10 +153,16 @@
       e.preventDefault();
 
       const nombre = document.getElementById('nombre').value.trim();
-      const condicion = document.getElementById('condicion').value;
-      const autonomia = document.getElementById('autonomia').value;
+      const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+      const edad = document.getElementById('edad').value;
       const correo = document.getElementById('correo').value.trim().toLowerCase();
       const contrasena = document.getElementById('contrasena').value.trim();
+      const cronica = document.getElementById('cronica').value.trim();
+      const discapacidad = document.getElementById('discapacidad').value.trim();
+      const motivo = document.getElementById('motivo').value.trim();
+      const intereses = document.getElementById('intereses').value.trim();
+      const habilidades = document.getElementById('habilidades').value.trim();
+      const autonomia = document.getElementById('autonomia').value;
       const errorMsg = document.getElementById('errorMensaje');
 
       const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
@@ -202,11 +175,17 @@
 
       const nuevoUsuario = database.ref('usuarios').push();
       nuevoUsuario.set({
-        nombre: nombre,
-        condicion: condicion,
-        autonomia: autonomia,
-        correo: correo,
-        contrasena: contrasena
+        nombre,
+        fechaNacimiento,
+        edad,
+        correo,
+        contrasena,
+        cronica,
+        discapacidad,
+        motivo,
+        intereses,
+        habilidades,
+        autonomia
       }).then(() => {
         alert("¡Registro exitoso!");
         window.location.href = "login.html";
@@ -214,30 +193,6 @@
         alert("Error al registrar: " + error.message);
       });
     });
-
-    // Mostrar botones según sesión
-    window.addEventListener('load', () => {
-      const botonesUsuario = document.getElementById('botonesUsuario');
-      const userId = localStorage.getItem('userId');
-
-      if (userId) {
-        botonesUsuario.innerHTML = `
-          <a href="perfil.html"><button class="btn btn-secundario">Mi perfil</button></a>
-          <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
-        `;
-      } else {
-        botonesUsuario.innerHTML = `
-          <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
-          <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
-        `;
-      }
-    });
-
-    function cerrarSesion() {
-      localStorage.removeItem('userId');
-      localStorage.setItem('mensajePerfil', 'Sesión cerrada correctamente.');
-      window.location.href = 'index.html';
-    }
   </script>
 </body>
 </html>
