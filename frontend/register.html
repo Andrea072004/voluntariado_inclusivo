@@ -187,12 +187,12 @@
   </script>
 
   <!-- Firebase -->
-  <script type="module">
+<script type="module">
   // Importar módulos de Firebase
   import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
   import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-  // Tu configuración de Firebase
+  // Configuración de Firebase
   const firebaseConfig = {
     apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
     authDomain: "voluntariado-inclusivo.firebaseapp.com",
@@ -202,9 +202,10 @@
     appId: "1:400448703475:web:72c8742f2a830e0f48e086"
   };
 
-  // Inicializar Firebase y Firestore
+  // Inicializar Firebase y Firestore correctamente
   const app = initializeApp(firebaseConfig);
-  const db = firebase.firestore();
+  const db = getFirestore(app); // ✅ CORREGIDO
+
   // Manejar el envío del formulario
   document.getElementById('registerForm').addEventListener('submit', async function (e) {
     e.preventDefault();
