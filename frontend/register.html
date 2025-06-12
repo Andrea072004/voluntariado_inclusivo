@@ -17,7 +17,7 @@
   <!-- Formulario Registro -->
   <div class="register-container">
     <div class="form-box">
-      <h2>¡Queremos conocerte mejor!</h2>
+      <h2>¡Bienvenido! Cuentanos un poco de ti</h2> 
 
       <form id="registerForm">
         <!-- Sección 1 -->
@@ -42,35 +42,76 @@
             </div>
             <div>
               <label for="contrasena">Contraseña</label>
-              <input type="password" id="contrasena" name="contrasena" required>
+              <div style="position: relative;">
+                <input type="password" id="contrasena" name="contrasena" required>
+                <i class="fas fa-eye toggle-password" onclick="mostrarContrasena()" style="position:absolute; top:12px; right:12px; cursor:pointer;"></i>
+              </div>
               <span class="error" id="errorMensaje"></span>
             </div>
           </div>
         </div>
+        
 
         <!-- Sección 2 -->
         <div class="form-section">
+          <h2>¡Queremos saber más!</h2> 
           <h3>Tu perfil como voluntario</h3>
           <div class="form-grid">
             <div>
-              <label for="cronica">Enfermedad crónica (si aplica)</label>
-              <input type="text" id="cronica" name="cronica">
+              <label for="cronica">Enfermedad crónica</label>
+              <select id="cronica" name="cronica">
+                <option value="">Ninguna</option>
+                <option>Hipertensión</option>
+                <option>Diabetes</option>
+                <option>Insuficiencia cardiaca</option>
+                <option>Arritmias</option>
+                <option>Trombosis</option>
+                <option>Artritis</option>
+                <option>Cáncer</option>
+                <option>Insuficiencia renal</option>
+                <option>Fibrosis pulmonar</option>
+              </select>
             </div>
             <div>
-              <label for="discapacidad">Tipo de discapacidad (si aplica)</label>
-              <input type="text" id="discapacidad" name="discapacidad">
+              <label for="discapacidad">Tipo de discapacidad</label>
+              <select id="discapacidad" name="discapacidad">
+                <option value="">Ninguna</option>
+                <option>Visual</option>
+                <option>Auditiva</option>
+                <option>Motora</option>
+                <option>Intelectual</option>
+              </select>
             </div>
             <div>
               <label for="motivo">Motivo para ser voluntario</label>
-              <input type="text" id="motivo" name="motivo" required>
+              <select id="motivo" name="motivo" required>
+                <option value="">Seleccione</option>
+                <option>Apoyar</option>
+                <option>Aprender</option>
+                <option>Conectar</option>
+                <option>Rehabilitar</option>
+              </select>
             </div>
             <div>
               <label for="intereses">Intereses</label>
-              <input type="text" id="intereses" name="intereses" required>
-            </div>
-            <div>
-              <label for="habilidades">Habilidades</label>
-              <input type="text" id="habilidades" name="habilidades" required>
+              <select id="intereses" name="intereses" required>
+                <option value="">Seleccione</option>
+                <option>Acompañamiento emocional virtual</option>
+                <option>Lectura inclusiva a domicilio</option>
+                <option>Educación digital para personas con discapacidad</option>
+                <option>Campañas de inclusión y sensibilización</option>
+                <option>Clasificación y donación de ropa</option>
+                <option>Apoyo escolar inclusivo</option>
+                <option>Terapias físicas o creativas</option>
+                <option>Huertos y agricultura urbana inclusiva</option>
+                <option>Actividades culturales y museos adaptados</option>
+                <option>Asistencia en comedores populares</option>
+                <option>Manualidades con adultos mayores</option>
+                <option>Cuido de animales con necesidades especiales</option>
+                <option>Acompañamiento en hospitales</option>
+                <option>Eventos deportivos inclusivos</option>
+                <option>Paseos y caminatas inclusivas</option>
+              </select>
             </div>
             <div>
               <label for="autonomia">Nivel de autonomía</label>
