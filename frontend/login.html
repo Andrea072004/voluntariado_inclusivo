@@ -69,19 +69,18 @@
 
   <!-- Scripts -->
   <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
   <script>
     const firebaseConfig = {
-      apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-      authDomain: "voluntariado-inclusivo.firebaseapp.com",
-      databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
-      projectId: "voluntariado-inclusivo",
-      storageBucket: "voluntariado-inclusivo.appspot.com",
-      messagingSenderId: "400448703475",
-      appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-    };
+    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+    authDomain: "voluntariado-inclusivo.firebaseapp.com",
+    projectId: "voluntariado-inclusivo",
+    storageBucket: "voluntariado-inclusivo.appspot.com",
+    messagingSenderId: "400448703475",
+    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+  };
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+    const db = firebase.firestore();
 
     document.getElementById("loginForm").addEventListener("submit", function (e) {
       e.preventDefault();
@@ -98,29 +97,29 @@
         return;
       }
 
-      db.ref("usuarios").once("value").then(snapshot => {
-        let accesoPermitido = false;
-        snapshot.forEach(child => {
-          const user = child.val();
-          if (
-            user.correo &&
-            user.contrasena &&
-            user.correo.toLowerCase() === email &&
-            user.contrasena === password
-          ) {
-            accesoPermitido = true;
-            localStorage.setItem("userId", child.key);
-          }
-        });
-
-        if (accesoPermitido) {
-          mostrarToast("Sesión iniciada correctamente", () => {
-            window.location.href = "explorar.html";
-          });
-        } else {
-          errorPassword.textContent = "Correo o contraseña incorrectos.";
+    db.collection("usuarios").get().then(snapshot => {
+      let accesoPermitido = false;
+      snapshot.forEach(doc => {
+        const user = doc.data();
+        if (
+          user.correo &&
+          user.contrasena &&
+          user.correo.toLowerCase() === email &&
+          user.contrasena === password
+        ) {
+          accesoPermitido = true;
+          localStorage.setItem("userId", doc.id);
         }
       });
+
+      if (accesoPermitido) {
+        mostrarToast("Sesión iniciada correctamente", () => {
+          window.location.href = "explorar.html";
+        });
+      } else {
+        errorPassword.textContent = "Correo o contraseña incorrectos.";
+      }
+    });
     });
 
     function abrirModal() {
@@ -150,25 +149,26 @@
         return;
       }
 
-      db.ref("usuarios").once("value").then(snapshot => {
-        let encontrado = false;
-        snapshot.forEach(child => {
-          const user = child.val();
-          if (
-            user.nombre &&
-            user.correo &&
-            user.nombre.toLowerCase() === nombre &&
-            user.correo.toLowerCase() === correo
-          ) {
-            mostrarToast("Datos validados correctamente");
-            alert("✅ Tu contraseña es: " + user.contrasena);
-            encontrado = true;
-          }
-        });
-        if (!encontrado) {
-          alert("❌ Nombre o correo incorrectos.");
-        }
-      });
+  db.collection("usuarios").get().then(snapshot => {
+    let encontrado = false;
+    snapshot.forEach(doc => {
+      const user = doc.data();
+      if (
+        user.nombre &&
+        user.correo &&
+        user.nombre.toLowerCase() === nombre &&
+        user.correo.toLowerCase() === correo
+      ) {
+        mostrarToast("Datos validados correctamente");
+        alert("✅ Tu contraseña es: " + user.contrasena);
+        encontrado = true;
+      }
+    });
+    if (!encontrado) {
+      alert("❌ Nombre o correo incorrectos.");
+    }
+  });
+
     }
 
     window.onclick = function (event) {

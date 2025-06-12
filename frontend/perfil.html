@@ -116,7 +116,8 @@
             </div>
           </div>
         </div>
-
+        
+        <div id="mensaje"></div>
         <button type="submit">Guardar cambios</button>
       </form>
     </div>
@@ -154,81 +155,105 @@
     }
   </script>
 
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-      authDomain: "voluntariado-inclusivo.firebaseapp.com",
-      databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
-      projectId: "voluntariado-inclusivo",
-      storageBucket: "voluntariado-inclusivo.appspot.com",
-      messagingSenderId: "400448703475",
-      appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
+  <!-- Solo necesitas estos dos -->
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
 
-    const userId = localStorage.getItem('userId');
-    if (!userId) {
-      alert('No se ha iniciado sesión.');
-      window.location.href = 'login.html';
-    } else {
-      db.ref('usuarios/' + userId).once('value').then(snapshot => {
-        const datos = snapshot.val();
+<script>
+  const userId = localStorage.getItem('userId');
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+    authDomain: "voluntariado-inclusivo.firebaseapp.com",
+    projectId: "voluntariado-inclusivo",
+    storageBucket: "voluntariado-inclusivo.appspot.com",
+    messagingSenderId: "400448703475",
+    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+  };
+
+  // Inicializar Firebase
+  firebase.initializeApp(firebaseConfig);
+
+  // Referencia a Firestore
+  const db = firebase.firestore();
+
+  // Redirigir si no hay sesión
+  if (!userId) {
+    alert('No se ha iniciado sesión.');
+    window.location.href = 'login.html';
+  } else {
+    db.collection('usuarios').doc(userId).get().then(doc => {
+      if (doc.exists) {
+        const datos = doc.data();
         document.getElementById('nombre').value = datos.nombre || '';
-        document.getElementById('condicion').value = datos.condicion || '';
-        document.getElementById('autonomia').value = datos.autonomia || '';
+        document.getElementById('fechaNacimiento').value = datos.fechaNacimiento || '';
+        document.getElementById('edad').value = datos.edad || '';
         document.getElementById('correo').value = datos.correo || '';
+        document.getElementById('cronica').value = datos.cronica || '';
+        document.getElementById('discapacidad').value = datos.discapacidad || '';
+        document.getElementById('motivo').value = datos.motivo || '';
+        document.getElementById('intereses').value = datos.intereses || '';
         document.getElementById('habilidades').value = datos.habilidades || '';
+        document.getElementById('autonomia').value = datos.autonomia || '';
+      } else {
+        console.log("No se encontró el documento.");
+      }
+    }).catch(error => {
+      console.error("Error al obtener datos:", error);
+    });
+  }
 
-        const interesesSelect = document.getElementById('intereses');
-        if (datos.intereses && Array.isArray(datos.intereses)) {
-          Array.from(interesesSelect.options).forEach(opt => {
-            if (datos.intereses.includes(opt.value)) {
-              opt.selected = true;
-            }
-          });
-        }
-      });
+  document.getElementById('editarPerfilForm').addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const nombre = document.getElementById('nombre').value.trim();
+    const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+    const edad = parseInt(document.getElementById('edad').value);
+    const cronica = document.getElementById('cronica').value;
+    const discapacidad = document.getElementById('discapacidad').value;
+    const motivo = document.getElementById('motivo').value;
+    const intereses = document.getElementById('intereses').value;
+    const habilidades = document.getElementById('habilidades').value.trim();
+    const autonomia = document.getElementById('autonomia').value;
+
+    const mensaje = document.getElementById('mensaje');
+
+    if (!nombre || !fechaNacimiento || !motivo || !intereses || !habilidades || !autonomia) {
+      mensaje.textContent = 'Por favor, complete todos los campos obligatorios.';
+      mensaje.className = 'mensaje error';
+      return;
     }
 
-    document.getElementById('perfilForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+    db.collection('usuarios').doc(userId).update({
+      nombre,
+      fechaNacimiento,
+      edad,
+      cronica,
+      discapacidad,
+      motivo,
+      intereses,
+      habilidades,
+      autonomia
+    }).then(() => {
+      mensaje.textContent = 'Datos actualizados correctamente.';
+      mensaje.className = 'mensaje exito';
 
-      const nombre = document.getElementById('nombre').value.trim();
-      const condicion = document.getElementById('condicion').value;
-      const autonomia = document.getElementById('autonomia').value;
-      const habilidades = document.getElementById('habilidades').value.trim();
-      const intereses = Array.from(document.getElementById('intereses').selectedOptions).map(o => o.value);
-      const mensaje = document.getElementById('mensaje');
-
-      if (!nombre || !condicion || !autonomia) {
-        mensaje.textContent = 'Por favor, complete todos los campos obligatorios.';
-        mensaje.className = 'mensaje error';
-        return;
+      if (Notification.permission === 'granted') {
+        new Notification('Perfil actualizado con éxito.');
+      } else if (Notification.permission !== 'denied') {
+        Notification.requestPermission().then(permission => {
+          if (permission === 'granted') {
+            new Notification('Perfil actualizado con éxito.');
+          }
+        });
       }
-
-      db.ref('usuarios/' + userId).update({
-        nombre, condicion, autonomia, habilidades, intereses
-      }).then(() => {
-        mensaje.textContent = 'Datos actualizados correctamente.';
-        mensaje.className = 'mensaje exito';
-
-        if (Notification.permission === 'granted') {
-          new Notification('Perfil actualizado con éxito.');
-        } else if (Notification.permission !== 'denied') {
-          Notification.requestPermission().then(permission => {
-            if (permission === 'granted') {
-              new Notification('Perfil actualizado con éxito.');
-            }
-          });
-        }
-      }).catch(error => {
-        mensaje.textContent = 'Error al actualizar: ' + error.message;
-        mensaje.className = 'mensaje error';
-      });
+    }).catch(error => {
+      mensaje.textContent = 'Error al actualizar: ' + error.message;
+      mensaje.className = 'mensaje error';
     });
-  </script>
+  });
+</script>
+
+
 </body>
 </html>

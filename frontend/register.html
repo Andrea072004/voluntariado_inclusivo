@@ -17,7 +17,7 @@
   <!-- Formulario Registro -->
   <div class="register-container">
     <div class="form-box">
-      <h2>¡Bienvenido! Cuentanos un poco de ti</h2> 
+      <h2>¡Queremos conocerte mejor!</h2>
 
       <form id="registerForm">
         <!-- Sección 1 -->
@@ -42,20 +42,15 @@
             </div>
             <div>
               <label for="contrasena">Contraseña</label>
-              <div style="position: relative;">
-                <input type="password" id="contrasena" name="contrasena" required>
-                <i class="fas fa-eye toggle-password" onclick="mostrarContrasena()" style="position:absolute; top:12px; right:12px; cursor:pointer;"></i>
-              </div>
+              <input type="password" id="contrasena" name="contrasena" required>
               <span class="error" id="errorMensaje"></span>
             </div>
           </div>
         </div>
-        
 
-        <!-- Sección 2 -->
+        <!-- Sección 2: Perfil como voluntario -->
         <div class="form-section">
-          <h2>¡Queremos saber más!</h2> 
-          <h3>Tu perfil como voluntario</h3>
+          <h3>Perfil como voluntario</h3>
           <div class="form-grid">
             <div>
               <label for="cronica">Enfermedad crónica</label>
@@ -114,6 +109,10 @@
               </select>
             </div>
             <div>
+              <label for="habilidades">Habilidades</label>
+              <input type="text" id="habilidades" name="habilidades" required>
+            </div>
+            <div>
               <label for="autonomia">Nivel de autonomía</label>
               <select id="autonomia" name="autonomia" required>
                 <option value="">Seleccione</option>
@@ -124,6 +123,7 @@
             </div>
           </div>
         </div>
+
 
         <button type="submit">Registrarse</button>
       </form>
@@ -175,47 +175,51 @@
   </script>
 
   <!-- Firebase -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-database-compat.js"></script>
-  <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-      authDomain: "voluntariado-inclusivo.firebaseapp.com",
-      databaseURL: "https://voluntariado-inclusivo-default-rtdb.firebaseio.com/",
-      projectId: "voluntariado-inclusivo",
-      storageBucket: "voluntariado-inclusivo.appspot.com",
-      messagingSenderId: "400448703475",
-      appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-    };
-    firebase.initializeApp(firebaseConfig);
-    const database = firebase.database();
+  <script type="module">
+  // Importar módulos de Firebase
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
 
-    document.getElementById('registerForm').addEventListener('submit', function(e) {
-      e.preventDefault();
+  // Tu configuración de Firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
+    authDomain: "voluntariado-inclusivo.firebaseapp.com",
+    projectId: "voluntariado-inclusivo",
+    storageBucket: "voluntariado-inclusivo.appspot.com",
+    messagingSenderId: "400448703475",
+    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
+  };
 
-      const nombre = document.getElementById('nombre').value.trim();
-      const fechaNacimiento = document.getElementById('fechaNacimiento').value;
-      const edad = document.getElementById('edad').value;
-      const correo = document.getElementById('correo').value.trim().toLowerCase();
-      const contrasena = document.getElementById('contrasena').value.trim();
-      const cronica = document.getElementById('cronica').value.trim();
-      const discapacidad = document.getElementById('discapacidad').value.trim();
-      const motivo = document.getElementById('motivo').value.trim();
-      const intereses = document.getElementById('intereses').value.trim();
-      const habilidades = document.getElementById('habilidades').value.trim();
-      const autonomia = document.getElementById('autonomia').value;
-      const errorMsg = document.getElementById('errorMensaje');
+  // Inicializar Firebase y Firestore
+  const app = initializeApp(firebaseConfig);
+  const db = firebase.firestore();
+  // Manejar el envío del formulario
+  document.getElementById('registerForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
-      if (!passwordRegex.test(contrasena)) {
-        errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
-        return;
-      } else {
-        errorMsg.textContent = "";
-      }
+    const nombre = document.getElementById('nombre').value.trim();
+    const fechaNacimiento = document.getElementById('fechaNacimiento').value;
+    const edad = parseInt(document.getElementById('edad').value);
+    const correo = document.getElementById('correo').value.trim().toLowerCase();
+    const contrasena = document.getElementById('contrasena').value.trim();
+    const cronica = document.getElementById('cronica').value.trim();
+    const discapacidad = document.getElementById('discapacidad').value.trim();
+    const motivo = document.getElementById('motivo').value.trim();
+    const intereses = document.getElementById('intereses').value.trim();
+    const habilidades = document.getElementById('habilidades').value.trim();
+    const autonomia = document.getElementById('autonomia').value;
+    const errorMsg = document.getElementById('errorMensaje');
 
-      const nuevoUsuario = database.ref('usuarios').push();
-      nuevoUsuario.set({
+    const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(contrasena)) {
+      errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
+      return;
+    } else {
+      errorMsg.textContent = "";
+    }
+
+    try {
+      await addDoc(collection(db, "usuarios"), {
         nombre,
         fechaNacimiento,
         edad,
@@ -227,13 +231,15 @@
         intereses,
         habilidades,
         autonomia
-      }).then(() => {
-        alert("¡Registro exitoso!");
-        window.location.href = "login.html";
-      }).catch((error) => {
-        alert("Error al registrar: " + error.message);
       });
-    });
-  </script>
+
+      alert("¡Registro exitoso!");
+      window.location.href = "login.html";
+    } catch (error) {
+      alert("Error al registrar: " + error.message);
+    }
+  });
+</script>
+
 </body>
 </html>
