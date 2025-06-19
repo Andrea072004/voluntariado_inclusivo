@@ -11,3 +11,10 @@ def get_all_users():
         users.append(user)
 
     return users
+
+def crear_usuario(data):
+    try:
+        doc_ref = db.collection('usuarios').add(data)
+        return {"success": True, "doc_id": doc_ref[1].id}
+    except Exception as e:
+        return {"success": False, "error": str(e)}

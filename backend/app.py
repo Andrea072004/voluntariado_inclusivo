@@ -14,7 +14,8 @@ if not firebase_admin._apps:
 db = firestore.client()
 
 app = Flask(__name__)
-CORS(app)  # Permitir llamadas desde el frontend
+CORS(app, resources={r"/*": {"origins": "*"}})
+
 
 # Registrar las rutas
 app.register_blueprint(user_routes, url_prefix="/api/users")
