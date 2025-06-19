@@ -186,44 +186,28 @@
       });
   </script>
 
-  <!-- Firebase -->
-  <script type="module">
-  // Importar módulos de Firebase
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-  // Tu configuración de Firebase
-  const firebaseConfig = {
-    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-    authDomain: "voluntariado-inclusivo.firebaseapp.com",
-    projectId: "voluntariado-inclusivo",
-    storageBucket: "voluntariado-inclusivo.appspot.com",
-    messagingSenderId: "400448703475",
-    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-  };
-
-  // Inicializar Firebase y Firestore
-  const app = initializeApp(firebaseConfig);
-  const db = firebase.firestore();
-  // Manejar el envío del formulario
+  <!-- Flask -->
+<script>
   document.getElementById('registerForm').addEventListener('submit', async function (e) {
     e.preventDefault();
 
-    const nombre = document.getElementById('nombre').value.trim();
-    const fechaNacimiento = document.getElementById('fechaNacimiento').value;
-    const edad = parseInt(document.getElementById('edad').value);
-    const correo = document.getElementById('correo').value.trim().toLowerCase();
-    const contrasena = document.getElementById('contrasena').value.trim();
-    const cronica = document.getElementById('cronica').value.trim();
-    const discapacidad = document.getElementById('discapacidad').value.trim();
-    const motivo = document.getElementById('motivo').value.trim();
-    const intereses = document.getElementById('intereses').value.trim();
-    const habilidades = document.getElementById('habilidades').value.trim();
-    const autonomia = document.getElementById('autonomia').value;
-    const errorMsg = document.getElementById('errorMensaje');
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      fechaNacimiento: document.getElementById('fechaNacimiento').value,
+      edad: parseInt(document.getElementById('edad').value),
+      correo: document.getElementById('correo').value.trim().toLowerCase(),
+      contrasena: document.getElementById('contrasena').value.trim(),
+      cronica: document.getElementById('cronica').value.trim(),
+      discapacidad: document.getElementById('discapacidad').value.trim(),
+      motivo: document.getElementById('motivo').value.trim(),
+      intereses: document.getElementById('intereses').value.trim(),
+      habilidades: document.getElementById('habilidades').value.trim(),
+      autonomia: document.getElementById('autonomia').value
+    };
 
+    const errorMsg = document.getElementById('errorMensaje');
     const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
-    if (!passwordRegex.test(contrasena)) {
+    if (!passwordRegex.test(datos.contrasena)) {
       errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
       return;
     } else {
@@ -231,27 +215,28 @@
     }
 
     try {
-      await addDoc(collection(db, "usuarios"), {
-        nombre,
-        fechaNacimiento,
-        edad,
-        correo,
-        contrasena,
-        cronica,
-        discapacidad,
-        motivo,
-        intereses,
-        habilidades,
-        autonomia
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
       });
 
-      alert("¡Registro exitoso!");
-      window.location.href = "login.html";
+      const resJson = await response.json();
+
+      if (response.ok) {
+        alert("¡Registro exitoso!");
+        window.location.href = "login.html";
+      } else {
+        alert("Error: " + resJson.message);
+      }
+
     } catch (error) {
-      alert("Error al registrar: " + error.message);
+      alert("Error de conexión con el servidor.");
     }
   });
 </script>
+
+  
 
 </body>
 </html>
