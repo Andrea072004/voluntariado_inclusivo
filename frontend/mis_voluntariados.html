@@ -8,6 +8,7 @@
   <link rel="stylesheet" href="css/mis_voluntariados.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="css/accesibilidad.css" />
 </head>
 <body>
 
@@ -48,53 +49,7 @@
   <footer class="footer">
     <p>&copy; 2025 Proyecto Voluntariado Inclusivo - Huancayo</p>
   </footer>
-
-  <!-- Script para navbar e íconos -->
-  <script>
-    fetch("components/navbar.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("navbar-container").innerHTML = data;
-
-        const userId = localStorage.getItem("userId");
-
-         if (botonesUsuario) {
-          if (userId) {
-            botonesUsuario.innerHTML = `
-              <a href="perfil.html" title="Mi perfil"><i class="fas fa-user"></i></a>
-              <button onclick="cerrarSesion()" class="btn btn-primario">Cerrar sesión</button>
-            `;
-          } else {
-            botonesUsuario.innerHTML = `
-              <a href="register.html"><button class="btn btn-secundario">Registrarse</button></a>
-              <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
-            `;
-          }
-        }
-
-        window.cerrarSesion = function () {
-          localStorage.removeItem("userId");
-          localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
-          window.location.href = "index.html";
-        };
-
-        const iconoCampana = document.getElementById("iconoCampana");
-        const dropdown = document.getElementById("dropdownNotificaciones");
-
-        if (iconoCampana && dropdown) {
-          iconoCampana.addEventListener("click", function (e) {
-            e.preventDefault();
-            dropdown.style.display = dropdown.style.display === "block" ? "none" : "block";
-          });
-
-          window.addEventListener("click", function (e) {
-            if (!iconoCampana.contains(e.target) && !dropdown.contains(e.target)) {
-              dropdown.style.display = "none";
-            }
-          });
-        }
-      });
-  </script>
-
+  <script src="js/main.js"></script>
+  <script src="js/navbar.js"></script>
 </body>
 </html>

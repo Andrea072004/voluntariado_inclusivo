@@ -8,19 +8,20 @@
   <link rel="stylesheet" href="css/navbar.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/accesibilidad.css" />
 </head>
 <body>
 
-  <!-- NAVBAR REUTILIZABLE -->
-  <div id="navbarContainer"></div>
+  <!-- NAVBAR DINÁMICO -->
+  <div id="navbar-container"></div>
 
-  <!-- CABECERA -->
+  <!-- CABECERA de contenido: sólo este <header> ahora -->
   <header class="main-header">
     <h1>Sobre Nosotros</h1>
     <p>Conoce la historia, valores y misión del proyecto de voluntariado inclusivo en Huancayo.</p>
   </header>
 
-  <!-- QUIENES SOMOS -->
+  <!-- QUIÉNES SOMOS -->
   <section class="quienes-somos">
     <h2>¿Quiénes Somos?</h2>
     <p>Somos una iniciativa sin fines de lucro nacida en Huancayo en 2025, con el objetivo de conectar personas con gran vocación de servicio con comunidades vulnerables, especialmente personas con discapacidad o enfermedades crónicas. Promovemos la inclusión, el respeto y la empatía a través de programas de voluntariado sostenibles y tecnológicos.</p>
@@ -78,6 +79,7 @@
     <p>&copy; 2025 Proyecto Voluntariado Inclusivo - Huancayo</p>
   </footer>
 
+  <!-- Scripts -->
   <!-- Script para insertar navbar -->
   <script>
     fetch("components/navbar.html")
@@ -135,5 +137,7 @@
       }
     });
   </script>
+  <script src="js/main.js"></script>
+  <script src="js/navbar.js"></script>
 </body>
 </html>

@@ -1,35 +1,108 @@
-/* Modo alto contraste */
-.modo-alto-contraste {
+a,
+button {
+  text-decoration: none !important;
+}
+
+:root {
+  --bg-normal: #f9f9f9;
+  --text-normal: #333;
+  --bg-navbar: #009ba5;
+  --text-navbar: #fff;
+  --btn-primario-bg: #ff0;
+  --btn-primario-text: #000;
+  --btn-secundario-bg: #fff;
+  --btn-secundario-text: #000;
+}
+
+body.modo-alto-contraste {
   background-color: #000 !important;
-  color: #FFD700 !important;
+  color: #fff !important;
 }
 
-.modo-alto-contraste a,
-.modo-alto-contraste h1,
-.modo-alto-contraste h2,
-.modo-alto-contraste h3,
-.modo-alto-contraste p,
-.modo-alto-contraste span,
-.modo-alto-contraste button,
-.modo-alto-contraste i {
-  color: #FFD700 !important;
+body.modo-alto-contraste .navbar {
   background-color: #000 !important;
-  border-color: #FFD700 !important;
+  border-bottom: 2px solid #ff0 !important;
+}
+body.modo-alto-contraste .navbar a,
+body.modo-alto-contraste .navbar button {
+  color: #ff0 !important;
+  background: transparent !important;
+  border: none !important;
 }
 
-/* Mejora accesibilidad general */
-button, a {
-  padding: 10px;
-  margin: 4px;
-  font-size: 1em;
+body.modo-alto-contraste .btn-primario {
+  background-color: #ff0 !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
+}
+body.modo-alto-contraste .btn-secundario {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
 }
 
-button:focus, a:focus {
-  outline: 2px dashed #000;
-  outline-offset: 4px;
+body.modo-alto-contraste .carrusel .prev,
+body.modo-alto-contraste .carrusel .next {
+  background-color: #000 !important;
+  color: #ff0 !important;
+  border: 2px solid #ff0 !important;
 }
 
-/* Íconos accesibles */
-i {
-  pointer-events: none;
+body.modo-alto-contraste section {
+  background-color: #000 !important;
+  color: #fff !important;
+}
+
+body.modo-alto-contraste h2,
+body.modo-alto-contraste p,
+body.modo-alto-contraste a {
+  color: #009ba5 !important;
+}
+
+body.modo-alto-contraste input,
+body.modo-alto-contraste select,
+body.modo-alto-contraste textarea {
+  background: #000 !important;
+  color: #fff !important;
+  border: 2px solid #ff0 !important;
+}
+
+/* Imágenes y videos sin invertir colores */
+body.modo-alto-contraste img,
+body.modo-alto-contraste video,
+body.modo-alto-contraste svg {
+  filter: none !important;
+}
+
+#btnContraste,
+#btnAumentarTexto,
+#btnDisminuirTexto {
+  width: 40px !important;
+  height: 40px !important;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  padding: 0 !important;
+  margin: 0 8px !important;
+  font-size: 1.2rem !important;
+  background-color: var(--btn-secundario-bg) !important;
+  color: var(--btn-secundario-text) !important;
+  border: 2px solid var(--btn-secundario-text) !important;
+}
+
+button:focus,
+a:focus,
+#btnContraste:focus,
+#btnAumentarTexto:focus,
+#btnDisminuirTexto:focus {
+  outline: 2px dashed var(--btn-secundario-text) !important;
+  outline-offset: 4px !important;
+}
+
+body.modo-alto-contraste #btnContraste,
+body.modo-alto-contraste #btnAumentarTexto,
+body.modo-alto-contraste #btnDisminuirTexto {
+  background-color: #fff !important;
+  color: #000 !important;
+  border: 2px solid #fff !important;
 }
