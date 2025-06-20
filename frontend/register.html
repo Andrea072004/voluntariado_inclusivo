@@ -187,54 +187,56 @@
   </script>
 
   <!-- Flask -->
-  <script>
-    document.getElementById('registerForm').addEventListener('submit', async function (e) {
-      e.preventDefault();
+<script>
+  document.getElementById('registerForm').addEventListener('submit', async function (e) {
+    e.preventDefault();
 
-      const datos = {
-        nombre: document.getElementById('nombre').value.trim(),
-        fechaNacimiento: document.getElementById('fechaNacimiento').value,
-        edad: parseInt(document.getElementById('edad').value),
-        correo: document.getElementById('correo').value.trim().toLowerCase(),
-        contrasena: document.getElementById('contrasena').value.trim(),
-        cronica: document.getElementById('cronica').value.trim(),
-        discapacidad: document.getElementById('discapacidad').value.trim(),
-        motivo: document.getElementById('motivo').value.trim(),
-        intereses: document.getElementById('intereses').value.trim(),
-        habilidades: document.getElementById('habilidades').value.trim(),
-        autonomia: document.getElementById('autonomia').value
-      };
+    const datos = {
+      nombre: document.getElementById('nombre').value.trim(),
+      fechaNacimiento: document.getElementById('fechaNacimiento').value,
+      edad: parseInt(document.getElementById('edad').value),
+      correo: document.getElementById('correo').value.trim().toLowerCase(),
+      contrasena: document.getElementById('contrasena').value.trim(),
+      cronica: document.getElementById('cronica').value.trim(),
+      discapacidad: document.getElementById('discapacidad').value.trim(),
+      motivo: document.getElementById('motivo').value.trim(),
+      intereses: document.getElementById('intereses').value.trim(),
+      habilidades: document.getElementById('habilidades').value.trim(),
+      autonomia: document.getElementById('autonomia').value
+    };
 
-      const errorMsg = document.getElementById('errorMensaje');
-      const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
-      if (!passwordRegex.test(datos.contrasena)) {
-        errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
-        return;
-      } else {
-        errorMsg.textContent = "";
-      }
+    const errorMsg = document.getElementById('errorMensaje');
+    const passwordRegex = /^(?=.*[A-Z]).{6,}$/;
+    if (!passwordRegex.test(datos.contrasena)) {
+      errorMsg.textContent = "La contraseña debe tener al menos 6 caracteres y una letra mayúscula.";
+      return;
+    } else {
+      errorMsg.textContent = "";
+    }
 
-      try {
-        const response = await fetch('http://localhost:5000/api/users/register', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(datos)
-        });
-
-        const resJson = await response.json();
-
-        if (response.ok) {
-          alert("¡Registro exitoso!");
-          window.location.href = "login.html";
-        } else {
-          alert("Error: " + resJson.message);
-        }
-
-      } catch (error) {
-        alert("Error de conexión con el servidor.");
-      }
+    try {
+      const response = await fetch('http://localhost:5000/api/users/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(datos)
       });
-  </script>
+
+      const resJson = await response.json();
+
+      if (response.ok) {
+        alert("¡Registro exitoso!");
+        window.location.href = "login.html";
+      } else {
+        alert("Error: " + resJson.message);
+      }
+
+    } catch (error) {
+      alert("Error de conexión con el servidor.");
+    }
+  });
+</script>
+
+  
 
 </body>
 </html>

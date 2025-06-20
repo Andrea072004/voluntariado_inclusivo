@@ -67,128 +67,15 @@
     </div>
   </div>
 
-  <!-- Scripts -->
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-app-compat.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore-compat.js"></script>
   <script>
-    const firebaseConfig = {
-    apiKey: "AIzaSyAqzhyPVGvQQdcQZ0D21CrJ6kltR_JM_Co",
-    authDomain: "voluntariado-inclusivo.firebaseapp.com",
-    projectId: "voluntariado-inclusivo",
-    storageBucket: "voluntariado-inclusivo.appspot.com",
-    messagingSenderId: "400448703475",
-    appId: "1:400448703475:web:72c8742f2a830e0f48e086"
-  };
-    firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
+  fetch("components/navbar.html")
+    .then(res => res.text())
+    .then(data => {
+      document.getElementById("navbar-container").innerHTML = data;
 
-    document.getElementById("loginForm").addEventListener("submit", function (e) {
-      e.preventDefault();
-      const email = document.getElementById("email").value.trim().toLowerCase();
-      const password = document.getElementById("password").value.trim();
-      const errorEmail = document.getElementById("error-email");
-      const errorPassword = document.getElementById("error-password");
-      errorEmail.textContent = "";
-      errorPassword.textContent = "";
-
-      if (!email || !password) {
-        if (!email) errorEmail.textContent = "Ingrese su correo.";
-        if (!password) errorPassword.textContent = "Ingrese su contraseña.";
-        return;
-      }
-
-    db.collection("usuarios").get().then(snapshot => {
-      let accesoPermitido = false;
-      snapshot.forEach(doc => {
-        const user = doc.data();
-        if (
-          user.correo &&
-          user.contrasena &&
-          user.correo.toLowerCase() === email &&
-          user.contrasena === password
-        ) {
-          accesoPermitido = true;
-          localStorage.setItem("userId", doc.id);
-        }
-      });
-
-      if (accesoPermitido) {
-        mostrarToast("Sesión iniciada correctamente", () => {
-          window.location.href = "explorar.html";
-        });
-      } else {
-        errorPassword.textContent = "Correo o contraseña incorrectos.";
-      }
-    });
-    });
-
-    function abrirModal() {
-      document.getElementById("modalRecuperar").style.display = "flex";
-    }
-
-    function cerrarToast() {
-      document.getElementById("toast").classList.remove("show");
-    }
-
-    function mostrarToast(mensaje, callback) {
-      const toast = document.getElementById("toast");
-      document.getElementById("toast-text").textContent = mensaje;
-      toast.classList.add("show");
-      setTimeout(() => {
-        toast.classList.remove("show");
-        if (callback) callback();
-      }, 2500);
-    }
-
-    function verificarDatos() {
-      const nombre = document.getElementById("recuperarNombre").value.trim().toLowerCase();
-      const correo = document.getElementById("recuperarCorreo").value.trim().toLowerCase();
-
-      if (!nombre || !correo) {
-        alert("Por favor, complete todos los campos.");
-        return;
-      }
-
-  db.collection("usuarios").get().then(snapshot => {
-    let encontrado = false;
-    snapshot.forEach(doc => {
-      const user = doc.data();
-      if (
-        user.nombre &&
-        user.correo &&
-        user.nombre.toLowerCase() === nombre &&
-        user.correo.toLowerCase() === correo
-      ) {
-        mostrarToast("Datos validados correctamente");
-        alert("✅ Tu contraseña es: " + user.contrasena);
-        encontrado = true;
-      }
-    });
-    if (!encontrado) {
-      alert("❌ Nombre o correo incorrectos.");
-    }
-  });
-
-    }
-
-    window.onclick = function (event) {
-      const modal = document.getElementById("modalRecuperar");
-      if (event.target === modal) modal.style.display = "none";
-    }
-
-    document.getElementById("mostrarContrasena").addEventListener("change", function () {
-      const passInput = document.getElementById("password");
-      passInput.type = this.checked ? "text" : "password";
-    });
-
-    // Navbar dinámico
-    fetch("components/navbar.html")
-      .then(res => res.text())
-      .then(data => {
-        document.getElementById("navbar-container").innerHTML = data;
-
-        const botonesUsuario = document.getElementById("botonesUsuario");
-        const userId = localStorage.getItem("userId");
+      const botonesUsuario = document.getElementById("botonesUsuario");
+      const userId = localStorage.getItem("userId");
+      if (botonesUsuario) {
         if (userId) {
           botonesUsuario.innerHTML = `
             <a href="perfil.html"><button class="btn btn-secundario">Mi perfil</button></a>
@@ -200,13 +87,131 @@
             <a href="login.html"><button class="btn btn-primario">Iniciar sesión</button></a>
           `;
         }
+      }
 
-        window.cerrarSesion = function () {
-          localStorage.removeItem("userId");
-          localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
-          window.location.href = "index.html";
-        };
+      window.cerrarSesion = function () {
+        localStorage.removeItem("userId");
+        localStorage.setItem("mensajePerfil", "Sesión cerrada correctamente.");
+        window.location.href = "index.html";
+      };
+    });
+</script>
+
+
+  <!-- FLASK -->
+   <script>
+  document.getElementById("loginForm").addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("email").value.trim().toLowerCase();
+    const password = document.getElementById("password").value.trim();
+    const errorEmail = document.getElementById("error-email");
+    const errorPassword = document.getElementById("error-password");
+    errorEmail.textContent = "";
+    errorPassword.textContent = "";
+
+    if (!email || !password) {
+      if (!email) errorEmail.textContent = "Ingrese su correo.";
+      if (!password) errorPassword.textContent = "Ingrese su contraseña.";
+      return;
+    }
+
+    try {
+      const response = await fetch("http://127.0.0.1:5000/api/users/login", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ correo: email, contrasena: password })
       });
-  </script>
+
+      const data = await response.json();
+
+      if (response.ok) {
+        localStorage.setItem("userId", data.id);
+        const nombre = data.nombre || "Usuario";
+        mostrarToast(`¡Bienvenido, ${nombre.split(" ")[0]}!`, () => {
+        window.location.href = "explorar.html";
+        });
+      } else {
+        errorPassword.textContent = data.message || "Credenciales incorrectas.";
+      }
+
+    } catch (error) {
+      alert("Error de conexión con el servidor.");
+    }
+  });
+</script>
+
+<script>
+  // ✅ Mostrar/Ocultar contraseña
+  document.addEventListener("DOMContentLoaded", function () {
+    const mostrarCheckbox = document.getElementById("mostrarContrasena");
+    const passwordInput = document.getElementById("password");
+
+    if (mostrarCheckbox) {
+      mostrarCheckbox.addEventListener("change", function () {
+        passwordInput.type = this.checked ? "text" : "password";
+      });
+    }
+  });
+
+  // ✅ Abrir modal de recuperar contraseña
+  function abrirModal() {
+    document.getElementById("modalRecuperar").style.display = "flex";
+  }
+
+  // ✅ Cerrar modal al hacer clic fuera
+  window.onclick = function (event) {
+    const modal = document.getElementById("modalRecuperar");
+    if (event.target === modal) {
+      modal.style.display = "none";
+    }
+  };
+
+  // ✅ Recuperar contraseña básica (client-side)
+  function verificarDatos() {
+    const nombre = document.getElementById("recuperarNombre").value.trim().toLowerCase();
+    const correo = document.getElementById("recuperarCorreo").value.trim().toLowerCase();
+
+    if (!nombre || !correo) {
+      alert("Por favor, complete todos los campos.");
+      return;
+    }
+
+    // Petición al backend para verificar datos (puedes migrarlo luego)
+    fetch("http://127.0.0.1:5000/api/users/recuperar", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ nombre, correo })
+    })
+      .then(res => res.json())
+      .then(data => {
+        if (data.success) {
+          alert("✅ Tu contraseña es: " + data.contrasena);
+        } else {
+          alert("❌ Nombre o correo incorrectos.");
+        }
+      })
+      .catch(() => {
+        alert("Error de conexión al recuperar contraseña.");
+      });
+  }
+  function mostrarToast(mensaje, callback) {
+  const toast = document.getElementById("toast");
+  document.getElementById("toast-text").textContent = mensaje;
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+    if (typeof callback === "function") callback();
+  }, 2500);
+}
+
+function cerrarToast() {
+  document.getElementById("toast").classList.remove("show");
+}
+
+</script>
+
+  
 </body>
 </html>
